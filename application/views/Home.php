@@ -51,10 +51,6 @@ $this->load->view('template_frontend/topbar');
 									class="flaticon-fork"></i>Termurah</a></span>
 						<span class="d-flex justify-content-md-center align-items-md-center"><a href="#"><i
 									class="flaticon-hotel"></i>Rating</a></span>
-						<span class="d-flex justify-content-md-center align-items-md-center"><a href="#"><i
-									class="flaticon-meeting-point"></i>Places</a></span>
-						<span class="d-flex justify-content-md-center align-items-md-	center"><a href="#"><i
-									class="flaticon-shopping-bag"></i>Shopping</a></span>
 					</p>
 				</div>
 			</div>
@@ -100,13 +96,13 @@ $this->load->view('template_frontend/topbar');
 			</div>
 		</div>
 	</section>
-	<!-- akhir menu aplikasi -->
+	<!-- untuk rekomendasi kemiripan hotel -->
 	<section class="ftco-section">
 		<div class="container">
 			<div class="row justify-content-start mb-5 pb-3">
 				<div class="col-md-7 heading-section ftco-animate">
-					<span class="subheading">Special Hotel</span>
-					<h2 class="mb-4"><strong>Popular</strong> Hotels &amp; Now 2021</h2>
+					<span class="subheading">Rekomendasi untuk Anda</span>
+					<h2 class="mb-4"><strong>Hotel Yang Mirip</strong> Dengan Kebutuhan Anda</h2>
 				</div>
 			</div>
 		</div>
@@ -120,7 +116,7 @@ $this->load->view('template_frontend/topbar');
 
 				<div class="col-sm col-md-6 col-lg ftco-animate">
 					<div class="destination">
-						<a href="#" class="img img-2 d-flex justify-content-center align-items-center"
+						<a href="<?php echo site_url('Home/detail_hotel/'.$row->id_hotel)?>" class="img img-2 d-flex justify-content-center align-items-center"
 							style="background-image: url(frontend/img/<?php echo $row->foto?>);">
 							<div class="icon d-flex justify-content-center align-items-center">
 								<span class="icon-search2"></span>
@@ -129,7 +125,7 @@ $this->load->view('template_frontend/topbar');
 						<div class="text p-3">
 							<div class="d-flex">
 								<div class="one">
-									<h3><a href="#"><?php echo $row->nama_hotel ?></a></h3>
+									<h3><a href="<?php echo site_url('Home/detail_hotel/'.$row->id_hotel)?>"><?php echo $row->nama_hotel ?></a></h3>
 									<p class="rate">
 										<?php
 										$review = $row->review;
@@ -177,7 +173,96 @@ $this->load->view('template_frontend/topbar');
 							<hr>
 							<p class="bottom-area d-flex">
 								<span><i class="icon-map-o"></i> <?php echo $row->lokasi ?></span>
-								<span class="ml-auto"><a href="#">Book Now</a></span>
+								<span class="ml-auto"><a href="<?php echo site_url('Home/detail_hotel/'.$row->id_hotel)?>">Book Now</a></span>
+							</p>
+						</div>
+					</div>
+				</div>
+				<?php
+				}
+				?>
+			</div>
+		</div>
+	</section>
+	<!-- akhir kemiripan hotel -->
+	<!-- akhir menu aplikasi -->
+	<section class="ftco-section">
+		<div class="container">
+			<div class="row justify-content-start mb-5 pb-3">
+				<div class="col-md-7 heading-section ftco-animate">
+					<span class="subheading">Hotel Populer</span>
+					<h2 class="mb-4"><strong>TOP 8</strong> Hotel Populer 2021</h2>
+				</div>
+			</div>
+		</div>
+		<!-- <div class="container-fluid"> -->
+		<div class="container-fluid col-md-10">
+			<div class="row">
+				<?php
+				foreach ($daftar_hotel as $row) {
+					
+				?>
+
+				<div class="col-sm col-md-6 col-lg ftco-animate">
+					<div class="destination">
+						<a href="<?php echo site_url('Home/detail_hotel/'.$row->id_hotel)?>" class="img img-2 d-flex justify-content-center align-items-center"
+							style="background-image: url(frontend/img/<?php echo $row->foto?>);">
+							<div class="icon d-flex justify-content-center align-items-center">
+								<span class="icon-search2"></span>
+							</div>
+						</a>
+						<div class="text p-3">
+							<div class="d-flex">
+								<div class="one">
+									<h3><a href="<?php echo site_url('Home/detail_hotel/'.$row->id_hotel)?>"><?php echo $row->nama_hotel ?></a></h3>
+									<p class="rate">
+										<?php
+										$review = $row->review;
+										if ($review>80 AND $review<100) {
+										?>
+										<i class="icon-star"></i>
+										<i class="icon-star"></i>
+										<i class="icon-star"></i>
+										<i class="icon-star"></i>
+										<i class="icon-star"></i>
+										<?php
+										} elseif($review>60 AND $review<80) { 
+										?>
+										<i class="icon-star"></i>
+										<i class="icon-star"></i>
+										<i class="icon-star"></i>
+										<i class="icon-star"></i>
+										<?php
+										} elseif ($review>40 AND $review<60){
+										?>
+										<i class="icon-star"></i>
+										<i class="icon-star"></i>
+										<i class="icon-star"></i>
+										<?php
+										} elseif ($review>20 AND $review<40){
+										?>
+										<i class="icon-star"></i>
+										<i class="icon-star"></i>
+										<?php
+										} else {
+										?>
+										<i class="icon-star"></i>
+										<?php
+										}
+										?>
+										<span><?php echo $row->review?></span>
+									</p>
+								</div>
+								<div class="two">
+									<span class="price per-price">
+										<?php echo $row->harga?></span>
+								</div>
+							</div>
+							<p><?php echo substr($row->deskripsi, 0, 50) ?></p>
+							<hr>
+							<p class="bottom-area d-flex">
+								<span><i class="icon-map-o"></i> <?php echo $row->lokasi ?></span>
+								<span class="ml-auto"><a href="<?php echo site_url('Home/detail_hotel/'.$row->id_hotel)?>">Book Now</a></span>
 							</p>
 						</div>
 					</div>
@@ -313,7 +398,7 @@ $this->load->view('template_frontend/topbar');
 							<hr>
 							<p class="bottom-area d-flex">
 								<span><i class="icon-map-o"></i> <?php echo $row->lokasi ?></span>
-								<span class="ml-auto"><a href="#">Book Now</a></span>
+								<span class="ml-auto"><a href="<?php echo site_url('Home/detail_hotel/'.$row->id_hotel)?>">Book Now</a></span>
 							</p>
 						</div>
 					</div>
@@ -325,7 +410,7 @@ $this->load->view('template_frontend/topbar');
 		</div>
 		<div class="form-group">
 				<center>
-				<span class="btn btn-primary py-3 px-5"><a href="#"><p style="color: white;">Hotel Lainnya</p></a></span>
+				<span class="btn btn-primary py-3 px-5"><a href="<?php echo site_url('Home/hotel_many')?>"><p style="color: white;">Hotel Lainnya</p></a></span>
                 <!-- <input type="submit" value="Hotel Lainnya" class="btn btn-primary py-3 px-5"> -->
 				</center>
 			</div>

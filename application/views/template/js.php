@@ -1,34 +1,56 @@
 </div><!-- /.content-wrapper -->
 
-<footer class="main-footer">
-    <div class="pull-right hidden-xs">
-        <b>Version</b> 1.0
-    </div>
-    <strong>Copyright &copy; UMSIDA <a href="#">SISTEM INFORMASI KEUANGAN</a>.</strong> All rights reserved.
+<footer>
+	<div class="footer-area">
+		<p>© Copyright 2021. All right reserved. Template by <a href="#">E-Modul</a>.</p>
+	</div>
 </footer>
 </div><!-- ./wrapper -->
 
-<!-- jQuery 2.1.3 -->
-<script src="<?php echo base_url('assets/AdminLTE-2.0.5/plugins/jQuery/jQuery-2.1.3.min.js') ?>"></script>
-<!-- Bootstrap 3.3.2 JS -->
-<script src="<?php echo base_url('assets/AdminLTE-2.0.5/bootstrap/js/bootstrap.min.js') ?>" type="text/javascript"></script>
-<script src="<?php echo base_url('assets/datatables/js/jquery.dataTables.min.js') ?>" type="text/javascript"></script>
-<script src="<?php echo base_url('assets/datatables/js/dataTables.bootstrap.js') ?>" type="text/javascript"></script>
-<!-- SlimScroll -->
-<script src="<?php echo base_url('assets/AdminLTE-2.0.5/plugins/slimScroll/jquery.slimScroll.min.js') ?>"></script>
-<!-- FastClick -->
-<script src="<?php echo base_url('assets/AdminLTE-2.0.5/plugins/fastclick/fastclick.min.js') ?>"></script>
-<!-- AdminLTE App -->
-<script src="<?php echo base_url('assets/AdminLTE-2.0.5/dist/js/app.min.js') ?>" type="text/javascript"></script>
-<!-- <script src="<?php echo base_url('assets/AdminLTE-2.0.5/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') ?>" type="text/javascript"></script> -->
+<script src="<?php echo base_url('assets/js/vendor/jquery-2.2.4.min.js') ?>"></script>
+<!-- bootstrap 4 js -->
+<script src="<?php echo base_url('assets/js/popper.min.js') ?>"></script>
+<script src="<?php echo base_url('assets/js/bootstrap.min.js') ?>"></script>
+<script src="<?php echo base_url('assets/js/owl.carousel.min.js') ?>"></script>
+<script src="<?php echo base_url('assets/js/metisMenu.min.js') ?>"></script>
+<script src="<?php echo base_url('assets/js/jquery.slimscroll.min.js') ?>"></script>
+<script src="<?php echo base_url('assets/js/jquery.slicknav.min.js') ?>"></script>
 
-<!--  <script src="../../plugins/flot/jquery.flot.min.js" type="text/javascript"></script> -->
+<!-- start chart js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+<!-- start highcharts js -->
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<!-- start amcharts -->
+<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+<script src="https://www.amcharts.com/lib/3/ammap.js"></script>
+<script src="https://www.amcharts.com/lib/3/maps/js/worldLow.js"></script>
+<script src="https://www.amcharts.com/lib/3/serial.js"></script>
+<script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+<script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+<script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js"></script>
+<!-- all line chart activation -->
+<script src="<?php echo base_url('assets/js/line-chart.js')?>"></script>
+<!-- all pie chart -->
+<script src="<?php echo base_url('assets/js/pie-chart.js')?>"></script>
+<!-- all bar chart -->
+<script src="<?php echo base_url('assets/js/bar-chart.js')?>"></script>
+<!-- all map chart -->
+<script src="<?php echo base_url('assets/js/maps.js')?>"></script>
+<!-- others plugins -->
+<script src="<?php echo base_url('assets/js/plugins.js') ?>"></script>
+<script src=" <?php echo base_url('assets/js/scripts.js') ?>"></script>
 
 
 
 <script>
-	$(document).ready(function(){
+	$(document).ready(function () {
 		console.log('work');
 	})
-</script>
 
+</script>

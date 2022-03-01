@@ -84,6 +84,11 @@ class Login extends CI_Controller
         //redirect('login','refresh',$data);
         redirect('', 'refresh');
     }
+    public function registrasi()
+    {
+      $this->load->view('V_registrasi');
+      
+    }
 }
 
 /* End of file Login.php */

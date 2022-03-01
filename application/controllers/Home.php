@@ -30,9 +30,28 @@ class Home extends CI_Controller
   }
   public function hotel_many()
   {
-    $this->load->view('Hotel_many');
+    //echo "halo";
+    //die();
+    $data['daftar_hotel'] = $this->M_home->select_many_hotel();
+    $this->load->view('Hotel_many', $data);
   }
-
+  public function detail_hotel($id_hotel)
+  {
+    //echo "halo";
+    //die();
+    $data['get_detail'] = $this->M_home->detail_hotel($id_hotel);
+    //var_dump($data);
+    //die();
+    $this->load->view('V_detail_home', $data);
+  }
+  public function recommendation()
+  {
+    $this->load->view('V_recommendation');
+  }
+  public function kontak_kami()
+  {
+    $this->load->view('V_kontak_kami');
+  }
 
 }
 

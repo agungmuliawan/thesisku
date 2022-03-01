@@ -1,48 +1,182 @@
-<?php 
+<?php
 $this->load->view('template/head');
 ?>
-<!--tambahkan custom css disini-->
 <?php
-$this->load->view('template/topbar');
-$this->load->view('template/sidebar');
+$panggil = $this->session->userdata();
 ?>
-<!-- Content Header (Page header) -->
-<section class="content-header">
-  <h1>
-    Berada - Sistem Informasi Keuangan
-    <small>Universitas Muhammdiyah Jogyakarta</small>
-    
-  </h1>
-</section>
+<!doctype html>
+<html class="no-js" lang="en">
 
-<!-- Main content -->
-<section class="content">
 
-  <div class="box">
-      <!--   <div class="box-header with-border">
-          <?php 
-          $panggil = $this->session->userdata();
-          ?>
-          <h3 class="box-title">Selamat Datang &nbsp;<b><i> <?php echo $panggil['nama']; ?></b></i></h3>
-        </div> -->
-        <div class="box-body">
-          <div class="callout callout-info">
-            <h4>Selamat Datang &nbsp;<b><i> <?php echo $panggil['nama']; ?></b></i></h4>
-            <p align="justify" style="font-size: 16px">
-              Selamat Datang di Sistem Informasi Keungan Universitas Muhammdiyah Sidoarjo
-              Segala aktivitas pengguna telah direkam dan di simpan kedalam <i>log</i> sistem kami untuk menghindari hal yang tidak diinginkan. Untuk itu kita lebih berhati-hati dalam melakukan perubahan data master, perubahan data akademik, transaksi keuangan dan sebagainya. Terima kasih
-            </p>
-          </div>
 
-        </div>
-    </div>
+<body>
+	<div id="preloader">
+		<div class="loader"></div>
+	</div>
+	<!-- preloader area end -->
+	<!-- page container area start -->
+	<div class="page-container">
+		<!-- sidebar menu area start -->
+		<?php 
+        $this->load->view('template/sidebar');
+        ?>
+		<!-- sidebar menu area end -->
+		<!-- main content area start -->
+		<div class="main-content">
+			<!-- header area start -->
+			<div class="header-area">
+				<div class="row align-items-center">
+					<!-- nav and search button -->
+					<div class="col-md-6 col-sm-8 clearfix">
 
-  </section><!-- /.content -->
+					</div>
+					<!-- profile info & task notification -->
+					<div class="col-md-6 col-sm-4 clearfix">
+						<ul class="notification-area pull-right">
+							<li id="full-view"><i class="ti-fullscreen"></i></li>
+							<li id="full-view-exit"><i class="ti-zoom-out"></i></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<!-- header area end -->
+			<!-- page title area start -->
+			<div class="page-title-area">
+				<div class="row align-items-center">
+					<div class="col-sm-6">
+						<div class="breadcrumbs-area clearfix">
+							<h4 class="page-title pull-left">Dashboard</h4>
+							<ul class="breadcrumbs pull-left">
+								<li><a href="index.html">Home</a></li>
+								<li><span>Dashboard</span></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-sm-6 clearfix">
+						<div class="user-profile pull-right">
+							<?php 
+                            $foto = $panggil['foto'];
+                            
+                            ?>
+							<img class="avatar user-thumb" src="<?php echo base_url('assets/images/img_user/'.$foto) ?>"
+								alt="avatar">
+							<h4 class="user-name dropdown-toggle" data-toggle="dropdown">
+								<?php echo $panggil['nama'] ?><i class="fa fa-angle-down"></i></h4>
+							<div class="dropdown-menu">
+								<a class="dropdown-item" href="#">Message</a>
+								<a class="dropdown-item" href="#">Settings</a>
+								<a class="dropdown-item" href="<?php echo site_url('Login/logout') ?>">Log Out</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- page title area end -->
+			<div class="main-content-inner">
+				<div class="row">
+					<!-- seo fact area start -->
+					<div class="col-lg-8">
+						<div class="row">
+							<div class="col-md-6 mt-5 mb-3">
+								<div class="card">
+									<div class="seo-fact sbg1">
+										<div class="p-4 d-flex justify-content-between align-items-center">
+											<div class="seofct-icon"><i class="ti-file"></i> Hotel</div>
+											<h2>214</h2>
+										</div>
+										<!-- <canvas id="seolinechart1" height="50"></canvas> -->
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 mt-md-5 mb-3">
+								<div class="card">
+									<div class="seo-fact sbg4">
+										<div class="p-4 d-flex justify-content-between align-items-center">
+											<div class="seofct-icon"><i class="ti-user"></i> User</div>
+											<h2>3</h2>
+										</div>
+										<!--    <canvas id="seolinechart2" height="50"></canvas> -->
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 mt-md-5 mb-3">
+								<div class="card">
+									<div class="seo-fact sbg2">
+										<div class="p-4 d-flex justify-content-between align-items-center">
+											<div class="seofct-icon"><i class="ti-download"></i> Transaksi</div>
+											<h2>10</h2>
+										</div>
 
-  <?php 
-  $this->load->view('template/js');
-  ?>
-  <!--tambahkan custom js disini-->
-  <?php
-  $this->load->view('template/foot');
-  ?>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 mt-md-5 mb-4">
+								<div class="card">
+									<div class="seo-fact sbg3">
+										<div class="p-4 d-flex justify-content-between align-items-center">
+											<div class="seofct-icon"><i class="ti-upload"></i> Data Olah</div>
+											<h2>100</h2>
+										</div>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- timeline area start -->
+					<div class="col-xl-3 col-ml-4 col-lg-4 mt-1">
+						<div class="card">
+							<div class="card-body">
+								<h4 class="header-title">Pengumuman</h4>
+								<div class="timeline-area">
+									<div class="timeline-task">
+										<div class="icon bg2">
+											<i class="fa fa-exclamation-triangle"></i>
+										</div>
+										<div class="tm-title">
+											<h4>Pemesanan Hotel Baru</h4>
+											<span class="time"><i class="ti-time"></i>09:35</span>
+										</div>
+										<p>Pemesanan hotel baru dengan transaksi 002
+										</p>
+									</div>
+									<div class="timeline-task">
+										<div class="icon bg2">
+											<i class="fa fa-exclamation-triangle"></i>
+										</div>
+										<div class="tm-title">
+											<h4>Pemesanan Hotel Baru</h4>
+											<span class="time"><i class="ti-time"></i>11:35</span>
+										</div>
+										<p>Pemesanan hotel baru dengan transaksi 001
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- timeline area end -->
+					<!-- map area end -->
+					<!-- testimonial area start -->
+					<!-- testimonial area end -->
+				</div>
+			</div>
+		</div>
+		<!-- main content area end -->
+		<!-- footer area start-->
+
+		<!-- footer area end-->
+	</div>
+	<!-- page container area end -->
+	<!-- offset area start -->
+
+	<!-- offset area end -->
+	<!-- jquery latest version -->
+
+
+	<?php
+    $this->load->view('template/js');
+    ?>
+	<?php
+    $this->load->view('template/foot');
+    ?>
