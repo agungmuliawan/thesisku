@@ -7923,7 +7923,7 @@ h1, h2, h3, h4, h5,
     background: -ms-linear-gradient(-45deg, #2ebdc4 0%, #68e5b2 100%);
     background: -webkit-linear-gradient(315deg, #2ebdc4 0%, #68e5b2 100%);
     background: -o-linear-gradient(315deg, #2ebdc4 0%, #68e5b2 100%);
-    background: linear-gradient(135deg, #2ebdc4 0%, #68e5b2 100%);
+    background: linear-gradient(135deg, #1f18db 0%, #1fdbdb 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2ebdc4', endColorstr='#68e5b2', GradientType=1 ); }
   .ftco-section-parallax .heading-section-white h2 {
     font-weight: 400 !important; }
