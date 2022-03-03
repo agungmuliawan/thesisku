@@ -78,7 +78,7 @@ $autoload['libraries'] = array('database', 'session');
 
 $autoload['drivers'] = array();
 
-// agung
+
 /*
 | -------------------------------------------------------------------
 |  Auto-load Helper Files

@@ -107,14 +107,46 @@ $this->load->view('template_frontend/topbar');
 				<div class="col-md-7 heading-section ftco-animate">
 					<span class="subheading">Rekomendasi Hotel</span>
 					<h3 class="mb-4"><strong>Silahkan Pilih Kebutuhan dan Prioritas</strong> Anda</h3>
-					Keterangan :<br> 
+					Keterangan :<br>
 					Kebutuhan Penting (KP) 3 kali lebih penting dari pada kebutuhan Umum (KU) <br>
 					Kebutuhan Penting (KP) 5 kali lebih penting dari pada kebutuhan Tambahan (KT) <br>
-					Kebutuhan Umum (KU) 2 kali lebih penting dari pada kebutuhan Tambahan (KT) 
+					Kebutuhan Umum (KU) 2 kali lebih penting dari pada kebutuhan Tambahan (KT)
 					<br>
 				</div>
 			</div>
-			<?php echo form_open_multipart('transaksi/C_transaksi'); ?>
+			<div class="block-17 my-4">
+				<?php echo form_open_multipart('transaksi/C_transaksi'); ?>
+				<!-- <form action="" method="post" class="d-block d-flex"> -->
+				<div class="fields d-block d-flex">
+					<div class="select-wrap one-third">
+						<div class="icon"><span class="ion-ios-arrow-down"></span></div>
+						<select name="daerah_anda" id="daerah_anda" class="form-control" placeholder="Keyword search">
+							<option value="0">Daerah Anda</option>
+							<?php
+                                $result= $this->db->query("SELECT * FROM tb_lokasi")->result();
+                                ?>
+							<?php foreach ($result as $row) { ?>
+							<option value="<?php echo $row->id_lokasi ?>"><?php echo $row->nm_lokasi ?></option>
+							<?php } ?>
+						</select>
+					</div>
+					<div class="select-wrap one-third">
+						<div class="icon"><span class="ion-ios-arrow-down"></span></div>
+						<select name="tujuan_anda" id="tujuan_anda" class="form-control" placeholder="Keyword search">
+							<option value="0">Tujuan Lokasi</option>
+							<?php
+                                $result= $this->db->query("SELECT * FROM tb_lokasi")->result();
+                                ?>
+							<?php foreach ($result as $row) { ?>
+							<option value="<?php echo $row->id_lokasi ?>"><?php echo $row->nm_lokasi ?></option>
+							<?php } ?>
+						</select>
+					</div>
+				</div>
+				<!-- <input type="submit" class="search-submit btn btn-primary" value="Search"> -->
+
+			</div>
+
 			<div class="row">
 				<div class="col-md-12 ftco-animate">
 					<div id="accordion">
@@ -134,106 +166,93 @@ $this->load->view('template_frontend/topbar');
 												<label class="col-md-3 control-label"
 													style="text-align:left;"><b>Fasilitas</b></label>
 												<div class="col-md-10">
-													<input type="checkbox" name="ac" value="ac" /> Air Conditioner (AC)
+													<input type="checkbox" name="fasilitas" value="ac" /> Air
+													Conditioner (AC)
 													<br>
-													<input type="checkbox" name="ac" value="ac" /> Television (TV) <br>
-													<input type="checkbox" name="ac" value="ac" /> Internet <br>
-													<input type="checkbox" name="ac" value="ac" /> Breakfast (Sarapan)
+													<input type="checkbox" name="fasilitas" value="tv" /> Television
+													(TV) <br>
+													<input type="checkbox" name="fasilitas" value="internet" /> Internet
 													<br>
-													<input type="checkbox" name="ac" value="ac" /> Ruang Meeting / Rapat
+													<input type="checkbox" name="fasilitas" value="breakfast" />
+													Breakfast (Sarapan)
 													<br>
-													<input type="checkbox" name="ac" value="ac" /> Ruang Kebugaran / Gym
+													<input type="checkbox" name="fasilitas" value="ruang_meeting" />
+													Ruang Meeting / Rapat
 													<br>
-													<input type="checkbox" name="ac" value="ac" /> Restoran Cepat Saji
+													<input type="checkbox" name="fasilitas" value="fitness" /> Ruang
+													Kebugaran / Fitness
 													<br>
-													<input type="checkbox" name="ac" value="ac" /> Kolam Renang <br>
-													<input type="checkbox" name="ac" value="ac" /> Area Parkiran <br>
+													<input type="checkbox" name="fasilitas" value="restoran" /> Restoran
+													Cepat Saji
+													<br>
+													<input type="checkbox" name="fasilitas" value="kolam_renang" />
+													Kolam Renang <br>
+													<input type="checkbox" name="fasilitas" value="parkiran" /> Area
+													Parkiran <br>
 												</div>
 											</div>
 											<div class="form-group d-flex" style="font-size: 15px;">
 												<label class="col-md-3 control-label"
 													style="text-align:left;"><b>Harga</b></label>
 												<div class="col-md-10">
-													<input type="radio" id="html" name="fav_language" value="HTML">
-													<label for="html"> > 1.000.000</label><br>
-													<input type="radio" id="html" name="fav_language" value="HTML">
-													<label for="html"> 500.000 – 1.000.000</label><br>
-													<input type="radio" id="html" name="fav_language" value="HTML">
-													<label for="html"> 300.000 – 500.000 </label><br>
-													<input type="radio" id="html" name="fav_language" value="HTML">
-													<label for="html"> 100.000 – 300.000</label><br>
-													<input type="radio" id="html" name="fav_language" value="HTML">
-													<label for="html"> < 100.000</label><br>
+													<?php
+													$result= $this->db->query("SELECT * FROM tb_harga")->result();
+													?>
+													<?php foreach ($result as $row) { ?>
+													<input type="radio" id="<?php echo $row->id_harga ?>" name="harga"
+														value="<?php echo $row->id_harga ?>">
+													<label for="<?php echo $row->id_harga ?>">
+														<?php echo $row->harga ?></label><br>
+													<?php } ?>
+													</select>
 												</div>
 											</div>
 											<div class="form-group d-flex" style="font-size: 15px;">
 												<label class="col-md-3 control-label"
 													style="text-align:left;"><b>Tipe Kamar</b></label>
 												<div class="col-md-10">
-													<input type="radio" id="tipe_kamar" name="tipe_kamar" value="tipe_kamar">
-													<label for="tipe_kamar"> Suite</label><br>
-													<input type="radio" id="tipe_kamar" name="tipe_kamar" value="tipe_kamar">
-													<label for="tipe_kamar"> Deluxe</label><br>
-													<input type="radio" id="tipe_kamar" name="tipe_kamar" value="tipe_kamar">
-													<label for="tipe_kamar"> Superior </label><br>
-													<input type="radio" id="tipe_kamar" name="tipe_kamar" value="tipe_kamar">
-													<label for="tipe_kamar"> Standart</label><br>
-													<input type="radio" id="tipe_kamar" name="tipe_kamar" value="tipe_kamar">
-													<label for="tipe_kamar"> Single</label><br>
+													<?php
+													$result= $this->db->query("SELECT * FROM tb_tipe_kamar")->result();
+													?>
+													<?php foreach ($result as $row) { ?>
+													<input type="radio" id="<?php echo $row->id_tipe_kamar ?>" name="tipe_kamar"
+														value="<?php echo $row->id_tipe_kamar ?>">
+													<label for="<?php echo $row->id_tipe_kamar ?>">
+														<?php echo $row->tipe_kamar ?></label><br>
+													<?php } ?>
+													</select>
 												</div>
 											</div>
 											<div class="form-group d-flex" style="font-size: 15px;">
 												<label class="col-md-3 control-label"
 													style="text-align:left;"><b>Review</b></label>
 												<div class="col-md-10">
-													<input type="radio" id="review" name="review" value="review">
-													<label for="review"> > 8.0</label><br>
-													<input type="radio" id="review" name="review" value="review">
-													<label for="review"> 6.0 – 8.0</label><br>
-													<input type="radio" id="review" name="review" value="review">
-													<label for="review"> 4.0 – 6.0 </label><br>
-													<input type="radio" id="review" name="review" value="review">
-													<label for="review"> 2.0 – 4.0</label><br>
-													<input type="radio" id="review" name="review" value="review">
-													<label for="review"> < 20.0</label><br>
+													<?php
+													$result= $this->db->query("SELECT * FROM tb_review")->result();
+													?>
+													<?php foreach ($result as $row) { ?>
+													<input type="radio" id="<?php echo $row->id_review ?>" name="review"
+														value="<?php echo $row->id_review ?>">
+													<label for="<?php echo $row->id_review ?>">
+														<?php echo $row->review ?></label><br>
+													<?php } ?>
+													</select>
 												</div>
 											</div>
 											<div class="form-group d-flex" style="font-size: 15px;">
 												<label class="col-md-3 control-label"
-													style="text-align:left;"><b>Bintang</b></label>
+													style="text-align:left;"><b>Kelas / Bintang</b></label>
 												<div class="col-md-10">
-													<input type="radio" id="bintang" name="bintang" value="bintang">
-													<label for="bintang"> Bintang 5</label><br>
-													<input type="radio" id="bintang" name="bintang" value="bintang">
-													<label for="bintang"> Bintang 4</label><br>
-													<input type="radio" id="bintang" name="bintang" value="bintang">
-													<label for="bintang"> Bintang 3 </label><br>
-													<input type="radio" id="bintang" name="bintang" value="bintang">
-													<label for="bintang"> Bintang 2</label><br>
-													<input type="radio" id="bintang" name="bintang" value="bintang">
-													<label for="bintang"> Bintang 1</label><br>
-												</div>
-											</div>
-											<div class="form-group d-flex" style="font-size: 15px;">
-												<label class="col-md-3 control-label"
-													style="text-align:left;"><b>Lokasi</b></label>
-												<div class="col-md-10">
-													<input type="radio" id="lokasi_kp" name="lokasi_kp" value="lokasi_kp">
-													<label for="lokasi_kp"> Gubeng</label><br>
-													<input type="radio" id="lokasi_kp" name="lokasi_kp" value="lokasi_kp">
-													<label for="lokasi_kp"> Rungkut</label><br>
-													<input type="radio" id="lokasi_kp" name="lokasi_kp" value="lokasi_kp">
-													<label for="lokasi_kp"> Sukolilo </label><br>
-													<input type="radio" id="lokasi_kp" name="lokasi_kp" value="lokasi_kp">
-													<label for="lokasi_kp"> Wonokromo</label><br>
-													<input type="radio" id="lokasi_kp" name="lokasi_kp" value="lokasi_kp">
-													<label for="lokasi_kp"> Mulyorejo</label><br>
-													<input type="radio" id="lokasi_kp" name="lokasi_kp" value="lokasi_kp">
-													<label for="lokasi_kp"> Lakarsantri</label><br>
-													<input type="radio" id="lokasi_kp" name="lokasi_kp" value="lokasi_kp">
-													<label for="lokasi_kp"> Tandes</label><br>
-													<input type="radio" id="lokasi_kp" name="lokasi_kp" value="lokasi_kp">
-													<label for="lokasi_kp"> Tambaksari</label><br>
+													<?php
+													$result= $this->db->query("SELECT * FROM tb_kelas")->result();
+													?>
+													<?php foreach ($result as $row) { ?>
+													<input type="radio" id="<?php echo $row->id_kelas ?>" name="kelas"
+														value="<?php echo $row->id_kelas ?>">
+													<label for="<?php echo $row->id_kelas ?>">
+														<?php echo $row->kelas ?></label><br>
+													<?php } ?>
+													</select>
 												</div>
 											</div>
 										</div>
@@ -247,111 +266,98 @@ $this->load->view('template_frontend/topbar');
 												class="expanded"><i class="icon-minus-circle"></i></span></a>
 									</div>
 									<div id="menutwo" class="collapse">
-										<div class="card-body">
+									<div class="card-body">
 											<div class="form-group d-flex" style="font-size: 15px;">
 												<label class="col-md-3 control-label"
 													style="text-align:left;"><b>Fasilitas</b></label>
 												<div class="col-md-10">
-													<input type="checkbox" name="ac" value="ac" /> Air Conditioner (AC)
+													<input type="checkbox" name="fasilitas" value="ac" /> Air
+													Conditioner (AC)
 													<br>
-													<input type="checkbox" name="ac" value="ac" /> Television (TV) <br>
-													<input type="checkbox" name="ac" value="ac" /> Internet <br>
-													<input type="checkbox" name="ac" value="ac" /> Breakfast (Sarapan)
+													<input type="checkbox" name="fasilitas" value="tv" /> Television
+													(TV) <br>
+													<input type="checkbox" name="fasilitas" value="internet" /> Internet
 													<br>
-													<input type="checkbox" name="ac" value="ac" /> Ruang Meeting / Rapat
+													<input type="checkbox" name="fasilitas" value="breakfast" />
+													Breakfast (Sarapan)
 													<br>
-													<input type="checkbox" name="ac" value="ac" /> Ruang Kebugaran / Gym
+													<input type="checkbox" name="fasilitas" value="ruang_meeting" />
+													Ruang Meeting / Rapat
 													<br>
-													<input type="checkbox" name="ac" value="ac" /> Restoran Cepat Saji
+													<input type="checkbox" name="fasilitas" value="fitness" /> Ruang
+													Kebugaran / Fitness
 													<br>
-													<input type="checkbox" name="ac" value="ac" /> Kolam Renang <br>
-													<input type="checkbox" name="ac" value="ac" /> Area Parkiran <br>
+													<input type="checkbox" name="fasilitas" value="restoran" /> Restoran
+													Cepat Saji
+													<br>
+													<input type="checkbox" name="fasilitas" value="kolam_renang" />
+													Kolam Renang <br>
+													<input type="checkbox" name="fasilitas" value="parkiran" /> Area
+													Parkiran <br>
 												</div>
 											</div>
 											<div class="form-group d-flex" style="font-size: 15px;">
 												<label class="col-md-3 control-label"
 													style="text-align:left;"><b>Harga</b></label>
 												<div class="col-md-10">
-													<input type="radio" id="html" name="fav_language" value="HTML">
-													<label for="html"> > 1.000.000</label><br>
-													<input type="radio" id="html" name="fav_language" value="HTML">
-													<label for="html"> 500.000 – 1.000.000</label><br>
-													<input type="radio" id="html" name="fav_language" value="HTML">
-													<label for="html"> 300.000 – 500.000 </label><br>
-													<input type="radio" id="html" name="fav_language" value="HTML">
-													<label for="html"> 100.000 – 300.000</label><br>
-													<input type="radio" id="html" name="fav_language" value="HTML">
-													<label for="html"> < 100.000</label><br>
+													<?php
+													$result= $this->db->query("SELECT * FROM tb_harga")->result();
+													?>
+													<?php foreach ($result as $row) { ?>
+													<input type="radio" id="<?php echo $row->id_harga ?>" name="harga"
+														value="<?php echo $row->id_harga ?>">
+													<label for="<?php echo $row->id_harga ?>">
+														<?php echo $row->harga ?></label><br>
+													<?php } ?>
+													</select>
 												</div>
 											</div>
 											<div class="form-group d-flex" style="font-size: 15px;">
 												<label class="col-md-3 control-label"
 													style="text-align:left;"><b>Tipe Kamar</b></label>
 												<div class="col-md-10">
-													<input type="radio" id="tipe_kamar" name="tipe_kamar" value="tipe_kamar">
-													<label for="tipe_kamar"> Suite</label><br>
-													<input type="radio" id="tipe_kamar" name="tipe_kamar" value="tipe_kamar">
-													<label for="tipe_kamar"> Deluxe</label><br>
-													<input type="radio" id="tipe_kamar" name="tipe_kamar" value="tipe_kamar">
-													<label for="tipe_kamar"> Superior </label><br>
-													<input type="radio" id="tipe_kamar" name="tipe_kamar" value="tipe_kamar">
-													<label for="tipe_kamar"> Standart</label><br>
-													<input type="radio" id="tipe_kamar" name="tipe_kamar" value="tipe_kamar">
-													<label for="tipe_kamar"> Single</label><br>
+													<?php
+													$result= $this->db->query("SELECT * FROM tb_tipe_kamar")->result();
+													?>
+													<?php foreach ($result as $row) { ?>
+													<input type="radio" id="<?php echo $row->id_tipe_kamar ?>" name="tipe_kamar"
+														value="<?php echo $row->id_tipe_kamar ?>">
+													<label for="<?php echo $row->id_tipe_kamar ?>">
+														<?php echo $row->tipe_kamar ?></label><br>
+													<?php } ?>
+													</select>
 												</div>
 											</div>
 											<div class="form-group d-flex" style="font-size: 15px;">
 												<label class="col-md-3 control-label"
 													style="text-align:left;"><b>Review</b></label>
 												<div class="col-md-10">
-													<input type="radio" id="review" name="review" value="review">
-													<label for="review"> > 8.0</label><br>
-													<input type="radio" id="review" name="review" value="review">
-													<label for="review"> 6.0 – 8.0</label><br>
-													<input type="radio" id="review" name="review" value="review">
-													<label for="review"> 4.0 – 6.0 </label><br>
-													<input type="radio" id="review" name="review" value="review">
-													<label for="review"> 2.0 – 4.0</label><br>
-													<input type="radio" id="review" name="review" value="review">
-													<label for="review"> < 20.0</label><br>
+													<?php
+													$result= $this->db->query("SELECT * FROM tb_review")->result();
+													?>
+													<?php foreach ($result as $row) { ?>
+													<input type="radio" id="<?php echo $row->id_review ?>" name="review"
+														value="<?php echo $row->id_review ?>">
+													<label for="<?php echo $row->id_review ?>">
+														<?php echo $row->review ?></label><br>
+													<?php } ?>
+													</select>
 												</div>
 											</div>
 											<div class="form-group d-flex" style="font-size: 15px;">
 												<label class="col-md-3 control-label"
-													style="text-align:left;"><b>Bintang</b></label>
+													style="text-align:left;"><b>Kelas / Bintang</b></label>
 												<div class="col-md-10">
-													<input type="radio" id="bintang" name="bintang" value="bintang">
-													<label for="bintang"> Bintang 5</label><br>
-													<input type="radio" id="bintang" name="bintang" value="bintang">
-													<label for="bintang"> Bintang 4</label><br>
-													<input type="radio" id="bintang" name="bintang" value="bintang">
-													<label for="bintang"> Bintang 3 </label><br>
-													<input type="radio" id="bintang" name="bintang" value="bintang">
-													<label for="bintang"> Bintang 2</label><br>
-													<input type="radio" id="bintang" name="bintang" value="bintang">
-													<label for="bintang"> Bintang 1</label><br>
-												</div>
-											</div>
-											<div class="form-group d-flex" style="font-size: 15px;">
-												<label class="col-md-3 control-label"
-													style="text-align:left;"><b>Lokasi</b></label>
-												<div class="col-md-10">
-													<input type="radio" id="lokasi_kp" name="lokasi_kp" value="lokasi_kp">
-													<label for="lokasi_kp"> Gubeng</label><br>
-													<input type="radio" id="lokasi_kp" name="lokasi_kp" value="lokasi_kp">
-													<label for="lokasi_kp"> Rungkut</label><br>
-													<input type="radio" id="lokasi_kp" name="lokasi_kp" value="lokasi_kp">
-													<label for="lokasi_kp"> Sukolilo </label><br>
-													<input type="radio" id="lokasi_kp" name="lokasi_kp" value="lokasi_kp">
-													<label for="lokasi_kp"> Wonokromo</label><br>
-													<input type="radio" id="lokasi_kp" name="lokasi_kp" value="lokasi_kp">
-													<label for="lokasi_kp"> Mulyorejo</label><br>
-													<input type="radio" id="lokasi_kp" name="lokasi_kp" value="lokasi_kp">
-													<label for="lokasi_kp"> Lakarsantri</label><br>
-													<input type="radio" id="lokasi_kp" name="lokasi_kp" value="lokasi_kp">
-													<label for="lokasi_kp"> Tandes</label><br>
-													<input type="radio" id="lokasi_kp" name="lokasi_kp" value="lokasi_kp">
-													<label for="lokasi_kp"> Tambaksari</label><br>
+													<?php
+													$result= $this->db->query("SELECT * FROM tb_kelas")->result();
+													?>
+													<?php foreach ($result as $row) { ?>
+													<input type="radio" id="<?php echo $row->id_kelas ?>" name="kelas"
+														value="<?php echo $row->id_kelas ?>">
+													<label for="<?php echo $row->id_kelas ?>">
+														<?php echo $row->kelas ?></label><br>
+													<?php } ?>
+													</select>
 												</div>
 											</div>
 										</div>
@@ -360,7 +366,7 @@ $this->load->view('template_frontend/topbar');
 							</div>
 
 							<div class="col-md-6">
-							<div class="card">
+								<div class="card">
 									<div class="card-header">
 										<a class="card-link" data-toggle="collapse" href="#menuthree"
 											aria-expanded="false" aria-controls="menuthree">Kebutuhan Umum (KU) <span
@@ -368,279 +374,116 @@ $this->load->view('template_frontend/topbar');
 												class="expanded"><i class="icon-minus-circle"></i></span></a>
 									</div>
 									<div id="menuthree" class="collapse">
-										<div class="card-body">
+									<div class="card-body">
 											<div class="form-group d-flex" style="font-size: 15px;">
 												<label class="col-md-3 control-label"
 													style="text-align:left;"><b>Fasilitas</b></label>
 												<div class="col-md-10">
-													<input type="checkbox" name="ac" value="ac" /> Air Conditioner (AC)
+													<input type="checkbox" name="fasilitas" value="ac" /> Air
+													Conditioner (AC)
 													<br>
-													<input type="checkbox" name="ac" value="ac" /> Television (TV) <br>
-													<input type="checkbox" name="ac" value="ac" /> Internet <br>
-													<input type="checkbox" name="ac" value="ac" /> Breakfast (Sarapan)
+													<input type="checkbox" name="fasilitas" value="tv" /> Television
+													(TV) <br>
+													<input type="checkbox" name="fasilitas" value="internet" /> Internet
 													<br>
-													<input type="checkbox" name="ac" value="ac" /> Ruang Meeting / Rapat
+													<input type="checkbox" name="fasilitas" value="breakfast" />
+													Breakfast (Sarapan)
 													<br>
-													<input type="checkbox" name="ac" value="ac" /> Ruang Kebugaran / Gym
+													<input type="checkbox" name="fasilitas" value="ruang_meeting" />
+													Ruang Meeting / Rapat
 													<br>
-													<input type="checkbox" name="ac" value="ac" /> Restoran Cepat Saji
+													<input type="checkbox" name="fasilitas" value="fitness" /> Ruang
+													Kebugaran / Fitness
 													<br>
-													<input type="checkbox" name="ac" value="ac" /> Kolam Renang <br>
-													<input type="checkbox" name="ac" value="ac" /> Area Parkiran <br>
+													<input type="checkbox" name="fasilitas" value="restoran" /> Restoran
+													Cepat Saji
+													<br>
+													<input type="checkbox" name="fasilitas" value="kolam_renang" />
+													Kolam Renang <br>
+													<input type="checkbox" name="fasilitas" value="parkiran" /> Area
+													Parkiran <br>
 												</div>
 											</div>
 											<div class="form-group d-flex" style="font-size: 15px;">
 												<label class="col-md-3 control-label"
 													style="text-align:left;"><b>Harga</b></label>
 												<div class="col-md-10">
-													<input type="radio" id="html" name="fav_language" value="HTML">
-													<label for="html"> > 1.000.000</label><br>
-													<input type="radio" id="html" name="fav_language" value="HTML">
-													<label for="html"> 500.000 – 1.000.000</label><br>
-													<input type="radio" id="html" name="fav_language" value="HTML">
-													<label for="html"> 300.000 – 500.000 </label><br>
-													<input type="radio" id="html" name="fav_language" value="HTML">
-													<label for="html"> 100.000 – 300.000</label><br>
-													<input type="radio" id="html" name="fav_language" value="HTML">
-													<label for="html"> < 100.000</label><br>
+													<?php
+													$result= $this->db->query("SELECT * FROM tb_harga")->result();
+													?>
+													<?php foreach ($result as $row) { ?>
+													<input type="radio" id="<?php echo $row->id_harga ?>" name="harga"
+														value="<?php echo $row->id_harga ?>">
+													<label for="<?php echo $row->id_harga ?>">
+														<?php echo $row->harga ?></label><br>
+													<?php } ?>
+													</select>
 												</div>
 											</div>
 											<div class="form-group d-flex" style="font-size: 15px;">
 												<label class="col-md-3 control-label"
 													style="text-align:left;"><b>Tipe Kamar</b></label>
 												<div class="col-md-10">
-													<input type="radio" id="tipe_kamar" name="tipe_kamar" value="tipe_kamar">
-													<label for="tipe_kamar"> Suite</label><br>
-													<input type="radio" id="tipe_kamar" name="tipe_kamar" value="tipe_kamar">
-													<label for="tipe_kamar"> Deluxe</label><br>
-													<input type="radio" id="tipe_kamar" name="tipe_kamar" value="tipe_kamar">
-													<label for="tipe_kamar"> Superior </label><br>
-													<input type="radio" id="tipe_kamar" name="tipe_kamar" value="tipe_kamar">
-													<label for="tipe_kamar"> Standart</label><br>
-													<input type="radio" id="tipe_kamar" name="tipe_kamar" value="tipe_kamar">
-													<label for="tipe_kamar"> Single</label><br>
+													<?php
+													$result= $this->db->query("SELECT * FROM tb_tipe_kamar")->result();
+													?>
+													<?php foreach ($result as $row) { ?>
+													<input type="radio" id="<?php echo $row->id_tipe_kamar ?>" name="tipe_kamar"
+														value="<?php echo $row->id_tipe_kamar ?>">
+													<label for="<?php echo $row->id_tipe_kamar ?>">
+														<?php echo $row->tipe_kamar ?></label><br>
+													<?php } ?>
+													</select>
 												</div>
 											</div>
 											<div class="form-group d-flex" style="font-size: 15px;">
 												<label class="col-md-3 control-label"
 													style="text-align:left;"><b>Review</b></label>
 												<div class="col-md-10">
-													<input type="radio" id="review" name="review" value="review">
-													<label for="review"> > 8.0</label><br>
-													<input type="radio" id="review" name="review" value="review">
-													<label for="review"> 6.0 – 8.0</label><br>
-													<input type="radio" id="review" name="review" value="review">
-													<label for="review"> 4.0 – 6.0 </label><br>
-													<input type="radio" id="review" name="review" value="review">
-													<label for="review"> 2.0 – 4.0</label><br>
-													<input type="radio" id="review" name="review" value="review">
-													<label for="review"> < 20.0</label><br>
+													<?php
+													$result= $this->db->query("SELECT * FROM tb_review")->result();
+													?>
+													<?php foreach ($result as $row) { ?>
+													<input type="radio" id="<?php echo $row->id_review ?>" name="review"
+														value="<?php echo $row->id_review ?>">
+													<label for="<?php echo $row->id_review ?>">
+														<?php echo $row->review ?></label><br>
+													<?php } ?>
+													</select>
 												</div>
 											</div>
 											<div class="form-group d-flex" style="font-size: 15px;">
 												<label class="col-md-3 control-label"
-													style="text-align:left;"><b>Bintang</b></label>
+													style="text-align:left;"><b>Kelas / Bintang</b></label>
 												<div class="col-md-10">
-													<input type="radio" id="bintang" name="bintang" value="bintang">
-													<label for="bintang"> Bintang 5</label><br>
-													<input type="radio" id="bintang" name="bintang" value="bintang">
-													<label for="bintang"> Bintang 4</label><br>
-													<input type="radio" id="bintang" name="bintang" value="bintang">
-													<label for="bintang"> Bintang 3 </label><br>
-													<input type="radio" id="bintang" name="bintang" value="bintang">
-													<label for="bintang"> Bintang 2</label><br>
-													<input type="radio" id="bintang" name="bintang" value="bintang">
-													<label for="bintang"> Bintang 1</label><br>
-												</div>
-											</div>
-											<div class="form-group d-flex" style="font-size: 15px;">
-												<label class="col-md-3 control-label"
-													style="text-align:left;"><b>Lokasi</b></label>
-												<div class="col-md-10">
-													<input type="radio" id="lokasi_kp" name="lokasi_kp" value="lokasi_kp">
-													<label for="lokasi_kp"> Gubeng</label><br>
-													<input type="radio" id="lokasi_kp" name="lokasi_kp" value="lokasi_kp">
-													<label for="lokasi_kp"> Rungkut</label><br>
-													<input type="radio" id="lokasi_kp" name="lokasi_kp" value="lokasi_kp">
-													<label for="lokasi_kp"> Sukolilo </label><br>
-													<input type="radio" id="lokasi_kp" name="lokasi_kp" value="lokasi_kp">
-													<label for="lokasi_kp"> Wonokromo</label><br>
-													<input type="radio" id="lokasi_kp" name="lokasi_kp" value="lokasi_kp">
-													<label for="lokasi_kp"> Mulyorejo</label><br>
-													<input type="radio" id="lokasi_kp" name="lokasi_kp" value="lokasi_kp">
-													<label for="lokasi_kp"> Lakarsantri</label><br>
-													<input type="radio" id="lokasi_kp" name="lokasi_kp" value="lokasi_kp">
-													<label for="lokasi_kp"> Tandes</label><br>
-													<input type="radio" id="lokasi_kp" name="lokasi_kp" value="lokasi_kp">
-													<label for="lokasi_kp"> Tambaksari</label><br>
+													<?php
+													$result= $this->db->query("SELECT * FROM tb_kelas")->result();
+													?>
+													<?php foreach ($result as $row) { ?>
+													<input type="radio" id="<?php echo $row->id_kelas ?>" name="kelas"
+														value="<?php echo $row->id_kelas ?>">
+													<label for="<?php echo $row->id_kelas ?>">
+														<?php echo $row->kelas ?></label><br>
+													<?php } ?>
+													</select>
 												</div>
 											</div>
 										</div>
 									</div>
 								</div>
-								
+
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 			<center>
-			<div class="col-md-3 form-group">
-			<input type="submit" value="Cari Rekomendasi Hotel Saya" class="btn btn-block btn-primary">
-		</div>
+				<div class="col-md-3 form-group">
+					<input type="submit" value="Cari Rekomendasi Hotel Saya" class="btn btn-block btn-primary">
+				</div>
 			</center>
 		</div>
 	</section>
-	<!-- <section class="ftco-section bg-light">
-		<div class="container">
-			<div class="row justify-content-start mb-5 pb-3">
-				<div class="col-md-7 heading-section ftco-animate">
-					<span class="subheading">FAQS</span>
-					<h2 class="mb-4"><strong>Pertanyaan</strong> dan Jawaban</h2>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-12 ftco-animate">
-					<div id="accordion">
-						<div class="row">
-							<div class="col-md-6">
-
-								<div class="card">
-									<div class="card-header">
-										<a class="card-link" data-toggle="collapse" href="#menutwo"
-											aria-expanded="false" aria-controls="menutwo">Apa itu Go-tel? <span
-												class="collapsed"><i class="icon-plus-circle"></i></span><span
-												class="expanded"><i class="icon-minus-circle"></i></span></a>
-									</div>
-									<div id="menutwo" class="collapse">
-										<div class="card-body">
-											<p>Aplikasi penyedian pemesanan dan booking hotel di Indonesia. Tidak hanya
-												itu kita juga dapat memberikan rekomendasi dengan cara melihat kemiripan
-												dan kebutuhan pengguna menggunakan algoritma teknologi canggih </p>
-										</div>
-									</div>
-								</div>
-								<div class="card">
-									<div class="card-header">
-										<a class="card-link" data-toggle="collapse" href="#menutwo"
-											aria-expanded="false" aria-controls="menutwo">Apa perbedaan Go-tel dengan
-											Aplikasi lainnya?<span class="collapsed"><i
-													class="icon-plus-circle"></i></span><span class="expanded"><i
-													class="icon-minus-circle"></i></span></a>
-									</div>
-									<div id="menutwo" class="collapse">
-										<div class="card-body">
-											<p>Perbedaan paling mencolok dalam memberikan rekomendasi dengan memberikan
-												pilihan prioritas kepada pengguna, faktanya aplikasi lain hanya melihat
-												melakukan filter secara umum dengan melihat pencarian hotel berdasarkan
-												rating saja</p>
-										</div>
-									</div>
-								</div>
-
-								<div class="card">
-									<div class="card-header">
-										<a class="card-link" data-toggle="collapse" href="#menu3" aria-expanded="false"
-											aria-controls="menu3"> Bagaimana proses menghasilkan rekomendasi ?<span
-												class="collapsed"><i class="icon-plus-circle"></i></span><span
-												class="expanded"><i class="icon-minus-circle"></i></span></a>
-									</div>
-									<div id="menu3" class="collapse">
-										<div class="card-body">
-											<p>Kami memberikan rekomendasi yang memiliki kemiripan tertinggi dengan
-												kebutuhan user dengan cara membanding data olah sebelumnya dengan data
-												dari user, semakin tinggi kemiripan akan kami berikan kepada user</p>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<div class="col-md-6">
-								<div class="card">
-									<div class="card-header">
-										<a class="card-link" data-toggle="collapse" href="#menu4" aria-expanded="false"
-											aria-controls="menu4">Pilihan apa saja untuk menghasilkan rekomendasi? <span
-												class="collapsed"><i class="icon-plus-circle"></i></span><span
-												class="expanded"><i class="icon-minus-circle"></i></span></a>
-									</div>
-									<div id="menu4" class="collapse">
-										<div class="card-body">
-											<p>Untuk kriteria kami memberikan 3 kategori yaitu Kebutuhan prioritas (KP),
-												kebutuhan Umum (KU) dan Kebutuhan Tambahan (KT). Untuk attribute pilihan
-												kita berikan 6 yaitu fasilitas, lokasi, harga, skor, bintang dan rating
-											</p>
-										</div>
-									</div>
-								</div>
-
-								<div class="card">
-									<div class="card-header">
-										<a class="card-link" data-toggle="collapse" href="#menu5" aria-expanded="false"
-											aria-controls="menu5">Bagaimana jika hanya membutuhkan 1 kriteria saja?
-											<span class="collapsed"><i class="icon-plus-circle"></i></span><span
-												class="expanded"><i class="icon-minus-circle"></i></span></a>
-									</div>
-									<div id="menu5" class="collapse">
-										<div class="card-body">
-											<p>Kami sadar setiap user memiliki kebutuhan berbeda-beda jadi tidak masalah
-											</p>
-										</div>
-									</div>
-								</div>
-
-								<div class="card">
-									<div class="card-header">
-										<a class="card-link" data-toggle="collapse" href="#menu6" aria-expanded="false"
-											aria-controls="menu6">Lalu bagaimana cara memulainya? <span
-												class="collapsed"><i class="icon-plus-circle"></i></span><span
-												class="expanded"><i class="icon-minus-circle"></i></span></a>
-									</div>
-									<div id="menu6" class="collapse">
-										<div class="card-body">
-											<p>Silahkan login terlebih dahulu untuk mendaftar supaya data pilihan anda
-												dapat di proses dan di jadikan data olah untuk rekomendasi user lainnya
-											</p>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section> -->
-
-	<!-- <section class="ftco-section-parallax">
-		<div class="parallax-img d-flex align-items-center">
-			<div class="container">
-				<div class="row d-flex justify-content-center">
-					<div class="col-md-7 text-center heading-section heading-section-white ftco-animate">
-						<h2>Silihkan Pilih Prioritas Anda</h2>
-						<p>Silahkan pilih kriteria kebutuhan dan fasilitas atau item yang dibutuhkan untuk kami berikan
-							rekomendasi hotel untuk Anda</p>
-						<div class="row d-flex justify-content-center mt-5">
-							<div class="col-md-8">
-								
-								<form action="#" class="subscribe-form">
-									<div class="form-group d-flex">
-                      				<input type="text" class="form-control" placeholder="Enter email address">
-                      				<input type="submit" value="Subscribe" class="submit px-3">
-                   				 </div>
-									
-								</form>
-								
-								
-								<div class="form-group">
-										<input type="submit" value="Rekomendasi Anda" class="btn btn-primary py-3">
-									</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section> -->
 
 	<?php
 	$this->load->view('template_frontend/footer');
