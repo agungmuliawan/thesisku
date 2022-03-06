@@ -17,9 +17,9 @@ $panggil = $this->session->userdata();
 	<!-- page container area start -->
 	<div class="page-container">
 		<!-- sidebar menu area start -->
-		<?php 
-        $this->load->view('template/sidebar');
-        ?>
+		<?php
+		$this->load->view('template/sidebar');
+		?>
 		<!-- sidebar menu area end -->
 		<!-- main content area start -->
 		<div class="main-content">
@@ -54,14 +54,13 @@ $panggil = $this->session->userdata();
 					</div>
 					<div class="col-sm-6 clearfix">
 						<div class="user-profile pull-right">
-							<?php 
-                            $foto = $panggil['foto'];
-                            
-                            ?>
-							<img class="avatar user-thumb" src="<?php echo base_url('assets/images/img_user/'.$foto) ?>"
-								alt="avatar">
+							<?php
+							$foto = $panggil['foto'] ?? null;
+
+							?>
+							<img class="avatar user-thumb" src="<?php echo base_url('assets/images/img_user/' . $foto) ?>" alt="avatar">
 							<h4 class="user-name dropdown-toggle" data-toggle="dropdown">
-								<?php echo $panggil['nama'] ?><i class="fa fa-angle-down"></i></h4>
+								<?php echo $panggil['nama'] ?? null ?><i class="fa fa-angle-down"></i></h4>
 							<div class="dropdown-menu">
 								<a class="dropdown-item" href="#">Message</a>
 								<a class="dropdown-item" href="#">Settings</a>
@@ -175,8 +174,8 @@ $panggil = $this->session->userdata();
 
 
 	<?php
-    $this->load->view('template/js');
-    ?>
+	$this->load->view('template/js');
+	?>
 	<?php
-    $this->load->view('template/foot');
-    ?>
+	$this->load->view('template/foot');
+	?>

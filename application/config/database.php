@@ -63,8 +63,8 @@ $active_group = 'default';
 $query_builder = true;
 
 $db['default'] = array(
-    'dsn'	=> '',
-    'hostname' => 'localhost',
+    'dsn'    => '',
+    'hostname' => 'localhost:3307',
     'username' => 'root',
     'password' => '',
     'database' => 'db_thesis',
