@@ -167,4 +167,3 @@ function hitungJarakLokasi($lokasi_asal, $lokasi_pembanding)
 
     return $nilai_d;
 }
-\
