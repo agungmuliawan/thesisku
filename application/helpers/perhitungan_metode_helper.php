@@ -1,5 +1,6 @@
-<?php
 
+<?php
+#proses utama
 function hitungPerbandingan(array $post)
 {
     $ci = &get_instance();
@@ -8,7 +9,8 @@ function hitungPerbandingan(array $post)
     // $result = $this->db->query("SELECT * FROM tb_kelas")->result();
     // ddd([$post, $data_training]);
 
-    $arr_bobot = hitungBobot($post);
+    $arr_bobot = hitungBobot($post); #cari bobot dari yang dipilih
+    // dd($arr_bobot);
     $result = [];
     foreach ($data_training as $key => $value) {
         // ddd($post, $value);
@@ -16,23 +18,26 @@ function hitungPerbandingan(array $post)
         $sum_bobot = 0;
         $sum_total = 0;
         $total     = 0;
-        // ddd($value);-
-        foreach ($value as $key_val => $item) {
-            $field = explode('_', $key_val);
+        // ddd($value);
+        foreach ($value as $key_val => $value_field_db) { #looping untuk fieldnya
+            #start hilangin suffix
+            #hilangin array suffix paling terakhir
+            $field = explode('_', $key_val);#mecah
             $jumlah_arr = count($field) - 1;
             if ($jumlah_arr > 0) {
-                unset($field[$jumlah_arr]);
+                unset($field[$jumlah_arr]); #dibuang
             }
-            $key_field = implode('_', $field);
+            $key_field = implode('_', $field); #digabungkan
+            #end hilangin suffix
             // if (!in_array($key_field, ['id_transaksi', 'id_user'])) {
-            if ($key_field != 'id') {
+            if (!in_array($key_field, ['id', 'result'])) {
                 $data_bobot = $arr_bobot[$key_field] ?? [];
                 $bobot      = $data_bobot['bobot'] ?? 0;
-                if ($item == 0) {
+                if ($value_field_db == 0) {
                     $bobot = 0;
                 }
                 // dd($data_bobot, $key_field);
-                $kemiripan  = hitungKemiripan(($data_bobot['value'] ?? 0), $item, $key_field);
+                $kemiripan  = hitungKemiripan(($data_bobot['value'] ?? 0), $value_field_db, $key_field);
                 // echo "<hr>";
                 $total      = $bobot * $kemiripan;
                 $sum_bobot  += $bobot;
@@ -42,6 +47,7 @@ function hitungPerbandingan(array $post)
                     'kemiripan' => $kemiripan,
                     'total'     =>  $total
                 ];
+                // ddd($skor);
             }
         }
         $hasil = 0;
@@ -52,16 +58,26 @@ function hitungPerbandingan(array $post)
         // if ($key == 3)
         //     ddd($arr_bobot, $value, $hasil, $skor);
         $result[$key] = [
-            // 'detail' => $skor,
+            'detail' => $skor,
             'skor' => $hasil,
+            'id_hotel' => $value->result,
         ];
+       // ddd($result);
     }
-    arsort($result);
+    // arsort($result);
+    $columns = array_column($result, "skor");
+    array_multisort($columns, SORT_DESC, $result);
     return $result;
+    //echo "Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse placeat quis fuga! Tenetur incidunt eligendi tempore ducimus nostrum omnis ipsum cumque libero repudiandae officia, at, qui, quae exercitationem expedita minima!";
+    ////echo $result;
 }
+// function hasilperhitungan(array $post) {
 
-function hitungBobot(array $post)
+// }
+#untuk set bobot dari pilihan form dari user KP, KU, KT
+function hitungBobot(array $post) 
 {
+    // dd($post);
     #nilai perbandingan
     $kp = 0.65; #kebutuhan prioritas
     $ku = 0.23; #kebutuhan umum
@@ -72,6 +88,7 @@ function hitungBobot(array $post)
     $lokasi_to   = $post['tujuan_anda'];
     unset($post['tujuan_anda']);
     unset($post['daerah_anda']);
+    // ddd($post);
     foreach ($post as $key => $kebutuhan) {
         foreach ($kebutuhan as $kebutuhan_key => $item) {
             $value = $item;
@@ -103,42 +120,51 @@ function hitungBobot(array $post)
         'bobot' => $kp,
         'value' => $lokasi_to,
     ];
-
+    // ddd($bobot);
     return $bobot;
 }
 
-function hitungKemiripan($value, $pembanding, $field)
+#perbandingan kemiripan
+#data_training => nilai data traning
+#pembanding => nilai pembanding
+#field => field prefix dari db
+function hitungKemiripan($data_training = 1, $pembanding = 2, $field)
 {
+    /** Bintang
+     * 1 => 5
+     * 2 => 4
+     * 3 => 3
+     */
     $ci = &get_instance();
     $ci->load->database();
 
     $kemiripan = 0;
     $calculate_kemiripan = 0.2;
     $hasil_kemiripan = 0;
-    if ($pembanding > 0 && $value > 0) {
-        $hasil_kemiripan = $value - $pembanding;
+    if ($pembanding > 0 && $data_training > 0) {
+        $hasil_kemiripan = $data_training - $pembanding;
         if ($hasil_kemiripan == 0) {
             $kemiripan = 1;
         } else {
             if ($field == 'lokasi') {
-                // ddd($kemiripan, $calculate_kemiripan, $hasil_kemiripan, $value, $pembanding);
+                // ddd($kemiripan, $calculate_kemiripan, $hasil_kemiripan, $data_training, $pembanding);
                 $calculate_kemiripan = 0.1;
-                $data_lokasi = $ci->db->query('select * from tb_lokasi where id_lokasi in  (' . $value . ', ' . $pembanding . ')')->result();
+                $data_lokasi = $ci->db->query('select * from tb_lokasi where id_lokasi in  (' . $data_training . ', ' . $pembanding . ')')->result();
                 $data_lokasi_all = $ci->db->query('select * from tb_lokasi')->result();
                 $lokasi_asal = $data_lokasi[0];
                 $lokasi_pembanding = $data_lokasi[1];
                 $arr_result = [];
-                foreach ($data_lokasi_all as $key => $value) {
-                    $arr_result[$value->id_lokasi] = hitungJarakLokasi($lokasi_asal, $value);
+                foreach ($data_lokasi_all as $key => $data_training) {
+                    $arr_result[$data_training->id_lokasi] = hitungJarakLokasi($lokasi_asal, $data_training);
                 }
-                asort($arr_result);
+                asort($arr_result);#diurutkan
 
                 $iterasi = 0;
-                foreach ($arr_result as $key => $value) {
-                    if ($key == $lokasi_pembanding->id_lokasi) {
+                foreach ($arr_result as $id_lokasi => $data_training) { #cari lokasi pembanding diurutan keberapa
+                    if ($id_lokasi == $lokasi_pembanding->id_lokasi) {
                         break;
                     }
-                    $iterasi++;
+                    $iterasi++;#untuk cek urutan
                 }
                 $kemiripan = 1 - ($calculate_kemiripan * abs($iterasi));
                 // ddd($iterasi, $kemiripan,  $arr_result);
@@ -147,7 +173,7 @@ function hitungKemiripan($value, $pembanding, $field)
             }
         }
     }
-    // dd('kemiripan', $value, $pembanding, $kemiripan, $hasil_kemiripan);
+    // dd('kemiripan', $data_training, $pembanding, $kemiripan, $hasil_kemiripan);
     return $kemiripan;
 }
 
@@ -166,4 +192,5 @@ function hitungJarakLokasi($lokasi_asal, $lokasi_pembanding)
     //     ddd($delta_lat, $delta_long, $nilai_a, $nilai_c, $nilai_d);
 
     return $nilai_d;
+   // var_dump($nilai_d);
 }

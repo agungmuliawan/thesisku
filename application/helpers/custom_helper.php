@@ -1,6 +1,6 @@
 <?php
 
-function dd(...$array)
+function dd(...$array) #die dump -> pre
 {
     echo "<pre>";
     print_r($array);

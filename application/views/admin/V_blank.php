@@ -80,8 +80,8 @@ $panggil = $this->session->userdata();
 								<div class="card">
 									<div class="seo-fact sbg1">
 										<div class="p-4 d-flex justify-content-between align-items-center">
-											<div class="seofct-icon"><i class="ti-file"></i> Hotel</div>
-											<h2>214</h2>
+										<div class="seofct-icon"><i class="ti-file"></i> Jumlah Hotel</div>
+											<h2>213</h2>
 										</div>
 										<!-- <canvas id="seolinechart1" height="50"></canvas> -->
 									</div>
@@ -90,9 +90,14 @@ $panggil = $this->session->userdata();
 							<div class="col-md-6 mt-md-5 mb-3">
 								<div class="card">
 									<div class="seo-fact sbg4">
-										<div class="p-4 d-flex justify-content-between align-items-center">
-											<div class="seofct-icon"><i class="ti-user"></i> User</div>
-											<h2>3</h2>
+									<div class="p-4 d-flex justify-content-between align-items-center">
+											<div class="seofct-icon"><i class="ti-user"></i> Jumlah User</div>
+											<?php
+											$result= $this->db->query("SELECT COUNT(id_user) as jumlah_user FROM tb_user")->result();
+											?>
+											<?php foreach ($result as $row) { ?>
+											<h2><?php echo $row->jumlah_user ?></h2>
+											<?php } ?>
 										</div>
 										<!--    <canvas id="seolinechart2" height="50"></canvas> -->
 									</div>
@@ -102,8 +107,13 @@ $panggil = $this->session->userdata();
 								<div class="card">
 									<div class="seo-fact sbg2">
 										<div class="p-4 d-flex justify-content-between align-items-center">
-											<div class="seofct-icon"><i class="ti-download"></i> Transaksi</div>
-											<h2>10</h2>
+										<div class="seofct-icon"><i class="ti-download"></i> Data Training</div>
+											<?php
+											$result= $this->db->query("SELECT COUNT(id_transaksi) as id_transaksi FROM tb_training")->result();
+											?>
+											<?php foreach ($result as $row) { ?>
+											<h2><?php echo $row->id_transaksi ?></h2>
+											<?php } ?>
 										</div>
 
 									</div>

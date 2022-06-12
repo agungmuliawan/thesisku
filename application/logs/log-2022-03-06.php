@@ -272,3 +272,11 @@ ERROR - 2022-03-06 08:58:42 --> Severity: Notice --> Undefined property: stdClas
 ERROR - 2022-03-06 08:58:42 --> Severity: Notice --> Undefined property: stdClass::$id C:\wamp64\www\agung\thesisku\application\helpers\perhitungan_metode_helper.php 131
 ERROR - 2022-03-06 09:07:05 --> Severity: Notice --> Object of class stdClass could not be converted to int C:\wamp64\www\agung\thesisku\application\helpers\perhitungan_metode_helper.php 137
 ERROR - 2022-03-06 09:07:27 --> Severity: Notice --> Object of class stdClass could not be converted to int C:\wamp64\www\agung\thesisku\application\helpers\perhitungan_metode_helper.php 137
+ERROR - 2022-03-06 14:35:40 --> Severity: Parsing Error --> syntax error, unexpected '?' C:\xampp\htdocs\thesisku_git\application\helpers\perhitungan_metode_helper.php 29
+ERROR - 2022-03-06 14:05:06 --> Severity: error --> Exception: syntax error, unexpected end of file, expecting identifier (T_STRING) C:\xampp\htdocs\thesisku_git\application\helpers\perhitungan_metode_helper.php 171
+ERROR - 2022-03-06 14:05:06 --> Severity: Error --> Uncaught TypeError: Argument 1 passed to CI_Exceptions::show_exception() must be an instance of Exception, instance of ParseError given, called in C:\xampp\htdocs\thesisku_git\system\core\Common.php on line 658 and defined in C:\xampp\htdocs\thesisku_git\system\core\Exceptions.php:190
+Stack trace:
+#0 C:\xampp\htdocs\thesisku_git\system\core\Common.php(658): CI_Exceptions->show_exception(Object(ParseError))
+#1 [internal function]: _exception_handler(Object(ParseError))
+#2 {main}
+  thrown C:\xampp\htdocs\thesisku_git\system\core\Exceptions.php 190

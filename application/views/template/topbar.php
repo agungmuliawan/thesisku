@@ -4,7 +4,7 @@
     <div class="wrapper">
 
         <header class="main-header">
-            <a href="#" class="logo"><b>E-Modul PMG</b></a>
+            <a href="#" class="logo"><b>Rekomendasi</b></a>
             <!-- Header Navbar: style can be found in header.less -->
             <nav class="navbar navbar-static-top" role="navigation">
                 <!-- Sidebar toggle button-->
@@ -29,13 +29,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- User image -->
-                                <li class="user-header">
-                                    <img src="<?php echo base_url('assets/img_user/'.$panggil['foto']) ?>" class="img-circle" alt="User Image" />
-                                    <p>
-                                        <?php echo $panggil['nama']; ?>
-                                        <small><?php echo $panggil['level']; ?></small>
-                                    </p>
-                                </li>
+                           
                                 <li class="user-footer">
                                     <div class="pull-right">
                                         <a href="<?php echo site_url('login/logout') ?>" class="btn btn-default btn-flat">Sign out</a>

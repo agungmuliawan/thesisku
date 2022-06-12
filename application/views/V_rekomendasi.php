@@ -22,7 +22,7 @@ $this->load->view('template_frontend/topbar');
 				<div class="col-md-12 heading-section ftco-animate">
 					<!-- <span class="subheading">Recommendation Hotel</span> -->
                    
-					<h2 class="mb-4"><strong>5 Top</strong> Rekomendasi untuk Anda</h2>
+					<h2 class="mb-4"><strong>Top</strong> Rekomendasi untuk Anda</h2>
                     Rekomendasi hotel merupakan rekomendasi yang di berikan oleh sistem dengan penggunaan algoritma mesin pintar 
                     sesuai dengan kebutuhan yang telah anda masukkan Anda. Proses rekomendasi hotel di lakukan dengan cara
                     melihat kemiripan kebutuhan Anda dengan pengguna sebelumnya dengan model CBR. Nilai kemiripan semakin tinggi akan
@@ -30,11 +30,11 @@ $this->load->view('template_frontend/topbar');
 				</div>
 			</div>
 		</div>
-		<!-- <div class="container-fluid"> -->
-		<!-- <div class="container-fluid col-md-10">
+		<div class="container-fluid">
+		<div class="container-fluid col-md-10">
 			<div class="row">
 				<?php
-				foreach ($rekomendasi as $row) {
+				foreach ($result as $row) {
 					
 				?>
 
@@ -52,7 +52,7 @@ $this->load->view('template_frontend/topbar');
 									<h3><a href="<?php echo site_url('Home/detail_hotel/'.$row->id_hotel)?>"><?php echo $row->nama_hotel ?></a></h3>
 									<p class="rate">
 										<?php
-										$review = $row->review;
+										$review = $row->persentase;
 										if ($review>80 AND $review<100) {
 										?>
 										<i class="icon-star"></i>
@@ -85,7 +85,7 @@ $this->load->view('template_frontend/topbar');
 										<?php
 										}
 										?>
-										<span><?php echo $row->review?></span>
+										<span><?php echo $review?>%</span>
 									</p>
 								</div>
 								<div class="two">
@@ -106,8 +106,8 @@ $this->load->view('template_frontend/topbar');
 				}
 				?>
 			</div>
-		</div> -->
-		<div class="container-fluid col-md-10">
+		</div>
+		<!-- <div class="container-fluid col-md-10">
 			<div class="row">
 				<div class="col-sm col-md-6 col-lg ftco-animate">
 					<div class="destination">
@@ -131,33 +131,6 @@ $this->load->view('template_frontend/topbar');
 							<hr>
 							<p class="bottom-area d-flex">
 								<span><i class="icon-map-o"></i> Dukuh Pakis</span>
-								<span class="ml-auto"><a href="#">Book Now</a></span>
-							</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm col-md-6 col-lg ftco-animate">
-					<div class="destination">
-						<a href="#" class="img img-2 d-flex justify-content-center align-items-center"
-							style="background-image: url(../frontend/img/primebiz.JPG);">
-							<div class="icon d-flex justify-content-center align-items-center">
-								<span class="icon-search2"></span>
-							</div>
-						</a>
-						<div class="text p-3">
-							<div class="d-flex">
-								<div class="one">
-									<h3><a href="#">Primebiz Hotel Surabaya</a></h3>
-								</div>
-								<div class="two">
-									<span class="price per-price">
-									Rp358.186 </span>
-								</div>
-							</div>
-							<p>Kemiripan : 94,35%</p>
-							<hr>
-							<p class="bottom-area d-flex">
-								<span><i class="icon-map-o"></i> Wonokromono</span>
 								<span class="ml-auto"><a href="#">Book Now</a></span>
 							</p>
 						</div>
@@ -190,10 +163,14 @@ $this->load->view('template_frontend/topbar');
 						</div>
 					</div>
 				</div>
+			</div>
+		</div>
+		<div class="container-fluid col-md-10">
+			<div class="row">
 				<div class="col-sm col-md-6 col-lg ftco-animate">
 					<div class="destination">
 						<a href="#" class="img img-2 d-flex justify-content-center align-items-center"
-							style="background-image: url(../frontend/img/<?php echo $row->foto?>);">
+							style="background-image: url(../frontend/img/tab_darmo.JPG);">
 							<div class="icon d-flex justify-content-center align-items-center">
 								<span class="icon-search2"></span>
 							</div>
@@ -201,14 +178,14 @@ $this->load->view('template_frontend/topbar');
 						<div class="text p-3">
 							<div class="d-flex">
 								<div class="one">
-									<h3><a href="#">Java Paragon Hotel And Residence</a></h3>
+									<h3><a href="#">Tab Hotel Darmo Permai Surabaya</a></h3>
 								</div>
 								<div class="two">
 									<span class="price per-price">
-									Rp582.416</span>
+										Rp. 200.000</span>
 								</div>
 							</div>
-							<p>Kemiripan : 93,10%</p>
+							<p>Kemiripan : 97,81%</p>
 							<hr>
 							<p class="bottom-area d-flex">
 								<span><i class="icon-map-o"></i> Dukuh Pakis</span>
@@ -220,7 +197,7 @@ $this->load->view('template_frontend/topbar');
 				<div class="col-sm col-md-6 col-lg ftco-animate">
 					<div class="destination">
 						<a href="#" class="img img-2 d-flex justify-content-center align-items-center"
-							style="background-image: url(../frontend/img/papilio.JPG);">
+							style="background-image: url(../frontend/img/fairfield.JPG);">
 							<div class="icon d-flex justify-content-center align-items-center">
 								<span class="icon-search2"></span>
 							</div>
@@ -228,17 +205,17 @@ $this->load->view('template_frontend/topbar');
 						<div class="text p-3">
 							<div class="d-flex">
 								<div class="one">
-									<h3><a href="#">Best Western Papilio Hotel</a></h3>
+									<h3><a href="#">Fairfield By Marriott Surabaya </a></h3>
 								</div>
 								<div class="two">
 									<span class="price per-price">
-									Rp488.000 </span>
+									Rp594.110</span>
 								</div>
 							</div>
-							<p>Kemiripan : 86,91%</p>
+							<p>Kemiripan : 93,35%</p>
 							<hr>
 							<p class="bottom-area d-flex">
-								<span><i class="icon-map-o"></i> Wonokromono</span>
+								<span><i class="icon-map-o"></i> Dukuh Pakis</span>
 								<span class="ml-auto"><a href="#">Book Now</a></span>
 							</p>
 						</div>
@@ -246,6 +223,64 @@ $this->load->view('template_frontend/topbar');
 				</div>
 			</div>
 		</div>
+		<div class="container-fluid col-md-10">
+			<div class="row">
+				<div class="col-sm col-md-6 col-lg ftco-animate">
+					<div class="destination">
+						<a href="#" class="img img-2 d-flex justify-content-center align-items-center"
+							style="background-image: url(../frontend/img/tab_darmo.JPG);">
+							<div class="icon d-flex justify-content-center align-items-center">
+								<span class="icon-search2"></span>
+							</div>
+						</a>
+						<div class="text p-3">
+							<div class="d-flex">
+								<div class="one">
+									<h3><a href="#">Tab Hotel Darmo Permai Surabaya</a></h3>
+								</div>
+								<div class="two">
+									<span class="price per-price">
+										Rp. 200.000</span>
+								</div>
+							</div>
+							<p>Kemiripan : 97,81%</p>
+							<hr>
+							<p class="bottom-area d-flex">
+								<span><i class="icon-map-o"></i> Dukuh Pakis</span>
+								<span class="ml-auto"><a href="#">Book Now</a></span>
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm col-md-6 col-lg ftco-animate">
+					<div class="destination">
+						<a href="#" class="img img-2 d-flex justify-content-center align-items-center"
+							style="background-image: url(../frontend/img/fairfield.JPG);">
+							<div class="icon d-flex justify-content-center align-items-center">
+								<span class="icon-search2"></span>
+							</div>
+						</a>
+						<div class="text p-3">
+							<div class="d-flex">
+								<div class="one">
+									<h3><a href="#">Fairfield By Marriott Surabaya </a></h3>
+								</div>
+								<div class="two">
+									<span class="price per-price">
+									Rp594.110</span>
+								</div>
+							</div>
+							<p>Kemiripan : 93,35%</p>
+							<hr>
+							<p class="bottom-area d-flex">
+								<span><i class="icon-map-o"></i> Dukuh Pakis</span>
+								<span class="ml-auto"><a href="#">Book Now</a></span>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div> -->
 	</section>
 
 	
