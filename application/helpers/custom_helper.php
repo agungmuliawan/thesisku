@@ -7,7 +7,18 @@ function dd(...$array) #die dump -> pre
     echo "</pre>";
 }
 
-function ddd(...$array){
+function ddd(...$array)
+{
     dd($array);
     die;
+}
+
+function perbandinganBobot()
+{
+    #digunakan untuk declare perbandingan bobot yang sudah ditentukan
+    return [
+        'kp' => 0.65,
+        'ku' => 0.23,
+        'kt' => 0.12,
+    ];
 }
