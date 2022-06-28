@@ -13,9 +13,9 @@ $this->load->view('template_frontend/head');
 
 <body>
 	<?php
-$this->load->view('template_frontend/topbar');
+$this->load->view('template_frontend/topbar_member');
 ?>
-	<div class="hero-wrap js-fullheight" style="background-image: url('frontend/images/background.jpg');">
+	<div class="hero-wrap js-fullheight" style="background-image: url('../frontend/images/background.jpg');">
 		<div class="overlay"></div>
 		<div class="container">
 			<div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start"
@@ -26,7 +26,7 @@ $this->load->view('template_frontend/topbar');
 					<p data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Dapatkan pengalaman rekomendasi
 						hotel sesuai dengan kebutuhanmu</p>
 					<div>
-						<form action="<?php echo site_url('Login'); ?>" method="post" class="d-block d-flex">
+						<form action="<?php echo site_url('Home/recommendation'); ?>" method="post" class="d-block d-flex">
 							<!-- <div class="fields d-block d-flex">
 								<div class="textfield-search one-third">
 									<input type="text" class="form-control" placeholder="Ex : Hotel Sahid Surabaya">
@@ -119,7 +119,7 @@ $this->load->view('template_frontend/topbar');
 				<div class="col-sm col-md-6 col-lg ftco-animate">
 					<div class="destination">
 						<a href="<?php echo site_url('Home/detail_hotel/'.$row->id_hotel)?>" class="img img-2 d-flex justify-content-center align-items-center"
-							style="background-image: url(frontend/img/<?php echo $row->foto?>);">
+							style="background-image: url(../frontend/img/<?php echo $row->foto?>);">
 							<div class="icon d-flex justify-content-center align-items-center">
 								<span class="icon-search2"></span>
 							</div>

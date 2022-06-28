@@ -56,6 +56,10 @@ class M_home extends CI_Model {
             return $query->row();
         }
     }
+    public function insert_registrasi($dataku)
+    {
+      return $this->db->insert('tb_user',$dataku);
+    }
 	
 }
 

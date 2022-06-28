@@ -11,7 +11,7 @@ $this->load->view('template_frontend/head');
 <body>
 
 	<?php
-	$this->load->view('template_frontend/topbar');
+	$this->load->view('template_frontend/topbar_member');
 	?>
 	<!-- END nav -->
 

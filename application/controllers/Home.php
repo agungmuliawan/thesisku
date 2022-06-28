@@ -8,6 +8,7 @@ class Home extends CI_Controller
   {
     parent::__construct();
 		$this->load->model('M_home');
+    $this->load->library('session');
     
   }
 
@@ -51,6 +52,15 @@ class Home extends CI_Controller
   public function kontak_kami()
   {
     $this->load->view('V_kontak_kami');
+  }
+  public function member()
+  {
+    //echo "work";
+    //die();
+    $data['daftar_hotel'] = $this->M_home->select_all_hotel();
+    //var_dump($data);
+   // die();
+    $this->load->view('Home_member', $data);
   }
 
 }

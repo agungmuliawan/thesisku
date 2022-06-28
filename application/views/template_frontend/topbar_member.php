@@ -10,9 +10,19 @@
 				<ul class="navbar-nav ml-auto">
 					<li class="nav-item active"><a href="<?php echo site_url('Home')?>" class="nav-link">Home</a></li>
 					<!-- <li class="nav-item"><a href="<?php echo site_url('Home/hotel_many')?>" class="nav-link">Semua Hotel</a></li> -->
-					<!-- <li class="nav-item"><a href="<?php echo site_url('Home/recommendation')?>" class="nav-link">Rekomendasi Hotel</a></li> -->
+					<li class="nav-item"><a href="<?php echo site_url('Home/recommendation')?>" class="nav-link">Rekomendasi Hotel</a></li>
 					<li class="nav-item"><a href="<?php echo site_url('Home/kontak_kami')?>" class="nav-link">Kontak Kami</a></li>
-					<li class="nav-item cta"><a href="<?php echo site_url('Login')?>" class="nav-link"><span>Login</span></a></li>
+                    <li class="nav-item cta"><span>
+                    <?php
+                //  $panggil = $this->session->userdata();
+                //     $nama = $panggil['nama'];
+                //     dd([$_SESSION, $this->session]);
+                //     die();
+                //     echo $panggil['nama'];
+                    ?>
+                    
+                    </span></a></li>
+					<li class="nav-item cta"><a href="<?php echo site_url('Login/logout')?>" class="nav-link"><span>Logout</span></a></li>
 				</ul>
 			</div>
 		</div>
