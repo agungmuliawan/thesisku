@@ -80,7 +80,7 @@ $panggil = $this->session->userdata();
 					</li>
 					<li><a href="<?php echo site_url('admin_area/C_master') ?>"><i class="ti-user"></i>
 							<span>User</span></a></li>
-					<li>
+					<!-- <li>
 						<a href="javascript:void(0)" aria-expanded="true"><i class="fa fa-align-left"></i> <span>Attribute</span></a>
 						<ul class="collapse">
 							<li><a href="<?php echo site_url('admin_area/C_master/data_attribute_lokasi')?>">Lokasi</a></li>
@@ -89,9 +89,9 @@ $panggil = $this->session->userdata();
 							<li><a href="<?php echo site_url('admin_area/C_master/data_attribute_review')?>">Review</a></li>
 							<li><a href="<?php echo site_url('admin_area/C_master/data_attribute_kelas')?>">Kelas</a></li>
 						</ul>
-					</li>
-					<li><a href="<?php echo site_url('admin_area/C_master/data_hotel') ?>"><i class="ti-folder"></i>
-							<span>Data Hotel</span></a></li>
+					</li> -->
+					<!-- <li><a href="<?php echo site_url('admin_area/C_master/data_hotel') ?>"><i class="ti-folder"></i>
+							<span>Data Hotel</span></a></li> -->
 					<li><a href="<?php echo site_url('admin_area/C_master/data_training') ?>"><i class="ti-folder"></i>
 							<span>Data Training</span></a></li>
 

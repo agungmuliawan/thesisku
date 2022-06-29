@@ -174,6 +174,8 @@ $this->load->view('template_frontend/head');
 														Kolam Renang <br>
 														<input type="checkbox" name="kp[parkiran]" class="kp fasilitas" onchange="disabledOtherClass(this,'.fasilitas')" value="parkiran" /> Area
 														Parkiran <br>
+														<input type="checkbox" name="kp[area_rokok]" class="kp fasilitas" onchange="disabledOtherClass(this,'.fasilitas')" value="area_rokok" /> Area
+														Rokok<br>
 													</div>
 												</div>
 												<div class="form-group d-flex" style="font-size: 15px;">
@@ -267,6 +269,8 @@ $this->load->view('template_frontend/head');
 														Kolam Renang <br>
 														<input type="checkbox" name="kt[parkiran]" class="kt fasilitas" onchange="disabledOtherClass(this,'.fasilitas')" value="parkiran" /> Area
 														Parkiran <br>
+														<input type="checkbox" name="kt[area_rokok]" class="kt fasilitas" onchange="disabledOtherClass(this,'.fasilitas')" value="area_rokok" /> Area
+														Rokok<br>
 													</div>
 												</div>
 												<div class="form-group d-flex" style="font-size: 15px;">
@@ -363,6 +367,8 @@ $this->load->view('template_frontend/head');
 														Kolam Renang <br>
 														<input type="checkbox" name="ku[parkiran]" class="ku fasilitas" onchange="disabledOtherClass(this,'.fasilitas')" value="parkiran" /> Area
 														Parkiran <br>
+														<input type="checkbox" name="ku[area_rokok]" class="ku fasilitas" onchange="disabledOtherClass(this,'.fasilitas')" value="area_rokok" /> Area
+														Rokok<br>
 													</div>
 												</div>
 												<div class="form-group d-flex" style="font-size: 15px;">

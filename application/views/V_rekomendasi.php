@@ -10,11 +10,11 @@
 <?php
 $this->load->view('template_frontend/head');
 ?>
-
-<body>
-	<?php
-	$this->load->view('template_frontend/topbar');
+<?php
+	$this->load->view('template_frontend/topbar_member');
 	?>
+<body>
+	
 	<!-- akhir menu aplikasi -->
 	<section class="ftco-section">
 		<div class="container">
@@ -43,7 +43,7 @@ $this->load->view('template_frontend/head');
 
 						<div class="col-sm col-md-6 col-lg ftco-animate">
 							<div class="destination">
-								<a href="<?php echo site_url('Home/detail_hotel/' . $row['id_hotel']) ?>" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url(../assets/images/card/card-img1.jpg);">
+								<a href="<?php echo site_url('Home/detail_hotel/' . $row['id_hotel']) ?>" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url(../assets/images/card/hotel.png);">
 									<div class="icon d-flex justify-content-center align-items-center">
 										<span class="icon-search2"></span>
 									</div>
@@ -147,13 +147,13 @@ $this->load->view('template_frontend/head');
 								<div class="col-4">
 								';
 
-								if ($key == 'kp') {
-									echo '<div class="badge badge-primary"> Kebutuhan Prioritas </div>';
-								} else if ($key == 'ku') {
-									echo '<div class="badge badge-info"> Kebutuhan Utama </div>';
-								} else if ($key == 'kt') {
-									echo '<div class="badge badge-warning"> Kebutuhan Tambahan </div>';
-								}
+								// if ($key == 'kp') {
+								 	echo '<div class="badge badge-primary"> Kebutuhan Prioritas </div>';
+								// } else if ($key == 'ku') {
+								 	echo '<div class="badge badge-info"> Kebutuhan Utama </div>';
+								// } else if ($key == 'kt') {
+								 	echo '<div class="badge badge-warning"> Kebutuhan Tambahan </div>';
+								// }
 								foreach ($value as $key_value => $value_result) {
 									switch ($key_value) {
 										case 'review':
