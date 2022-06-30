@@ -12,13 +12,14 @@ class C_transaksi extends CI_Controller
 	public function index()
 	{
 		$post = $this->input->post();
+		// ddd($post);
 		$review = $post['kp']['review'] ?? $post['ku']['review'] ?? $post['kt']['review'] ?? null;
 		$kelas = $post['kp']['kelas'] ?? $post['ku']['kelas'] ?? $post['kt']['kelas'] ?? null;
 		$harga = $post['kp']['harga'] ?? $post['ku']['harga'] ?? $post['kt']['harga'] ?? null;
 		$tipe_kamar = $post['kp']['tipe_kamar'] ?? $post['ku']['tipe_kamar'] ?? $post['kt']['tipe_kamar'] ?? null;
 
 		$data['param'] = $post;
-		$data['daerah_anda'] = $this->db->query('select * from tb_lokasi where id_lokasi = ' . $post['daerah_anda'])->result()[0];
+		$data['daerah_anda'] = $this->db->query('select * from tb_lokasi where id_lokasi = ' . $post['tujuan_anda'])->result()[0];
 		$data['tujuan_anda'] = $this->db->query('select * from tb_lokasi where id_lokasi = ' . $post['tujuan_anda'])->result()[0];
 		$data['review'] = !empty($review) ? $this->db->query('select * from tb_review where id_review = ' . $review)->result()[0] : null;
 		// ddd($data);
@@ -26,7 +27,7 @@ class C_transaksi extends CI_Controller
 		$data['harga'] = !empty($harga) ? $this->db->query('select * from tb_harga where id_harga = ' . $harga)->result()[0] : null;
 		$data['tipe_kamar'] = !empty($tipe_kamar) ? $this->db->query('select * from tb_tipe_kamar where id_tipe_kamar = ' . $tipe_kamar)->result()[0] : null;
 		$data['result'] = $this->setDataHitungMetode($post);
-		// dd($data['result']);
+		// ddd($data['result']);
 		/**
 		 * id hootel
 		 * nama hotel
@@ -49,6 +50,7 @@ class C_transaksi extends CI_Controller
 		// $limit = 10;
 		$result = [];
 		foreach ($metode['result'] as $key => $value) {
+			// ddd($value);
 			// echo $key.'<br>';
 			$id_hotel = $value['id_hotel'];
 			$hotel = $this->db->query("select 
@@ -81,6 +83,7 @@ class C_transaksi extends CI_Controller
 				'foto' => '...',
 				'kemiripan' => $value['skor'],
 				'perhitungan' => $value,
+				'id_data_training' => $value['id_data_training']
 			];
 		}
 		return [

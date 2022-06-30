@@ -1,12 +1,11 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
-
+// session_start();
 class Login extends CI_Controller
 {
     public function __construct()
     {
         parent::__construct();
-        $this->load->library('session');
         $this->load->model('M_home');
     }
 
@@ -27,9 +26,9 @@ class Login extends CI_Controller
         $this->load->model('M_login'); // load model_user
         $hasil = $this->M_login->cek_user($data);
         if ($hasil->num_rows() == 1) {
-            
-            
-                //$sess_data['logged_in'] = 'Sudah Loggin';
+
+
+            //$sess_data['logged_in'] = 'Sudah Loggin';
             /*$sess_data['username'] = $sess->username;*/
             /*$sess_data['nip'] = $sess->nip;*/
             $sess_data['nip_user'] = $hasil->result()[0]->nip_user;
@@ -47,29 +46,29 @@ class Login extends CI_Controller
             $sess_data['status'] = $hasil->result()[0]->status;
             //$sess_data['jabatan'] = $sess->level;
             $this->session->set_userdata($sess_data);
-             $_SESSION['user'] = $sess_data;
-            
+            $_SESSION['user'] = $sess_data;
+
             if ($this->session->userdata('level') == 'administrator') {
                 // session_start();
                 //exit();
-            //    $panggil = $this->session->userdata();
-               // echo $panggil['jabatan'];
+                //    $panggil = $this->session->userdata();
+                // echo $panggil['jabatan'];
                 // dd([$_SESSION, $this->session]);
 
                 // echo "work";
-               // die();
+                // die();
                 redirect('admin_area/C_home', 'refresh');
-            //print_r($_SESSION); exit();
+                //print_r($_SESSION); exit();
                 //echo "sukses";
                 /*redirect('http://localhost/siak_pmg/index.php/admin_area/C_home');*/
             } elseif ($this->session->userdata('level') == 'member') {
-               //session_start();
-            //    $panggil = $this->session->userdata();
-            //    echo $panggil['nama'];
-            //     dd([$_SESSION, $this->session]);
-                
-             //echo "work";
-             //die();
+                //session_start();
+                //    $panggil = $this->session->userdata();
+                //    echo $panggil['nama'];
+                // ddd([$_SESSION, $this->session]);
+
+                //echo "work";
+                //die();
                 redirect('Home/member', 'refresh');
             }
         } else {
@@ -89,23 +88,22 @@ class Login extends CI_Controller
     }
     public function registrasi()
     {
-      $this->load->view('V_registrasi');
-      
+        $this->load->view('V_registrasi');
     }
     public function proses_registrasi()
     {
-    //  $this->load->view('V_registrasi');
-    $dataku['nama']        = $_POST['nama'];
-    $dataku['nip_user']        = $_POST['nip_user'];
-    $dataku['password']        = md5($_POST['password']);
-    $dataku['level']  = 'member';
-    $dataku['status']  = 'aktif';
-    //	$dataku['gol']  = $_POST['gol'];
-    // var_dump($dataku);
-    // die();
-    $this->M_home->insert_registrasi($dataku);
+        //  $this->load->view('V_registrasi');
+        $dataku['nama']        = $_POST['nama'];
+        $dataku['nip_user']        = $_POST['nip_user'];
+        $dataku['password']        = md5($_POST['password']);
+        $dataku['level']  = 'member';
+        $dataku['status']  = 'aktif';
+        //	$dataku['gol']  = $_POST['gol'];
+        // var_dump($dataku);
+        // die();
+        $this->M_home->insert_registrasi($dataku);
 
-    redirect('Login', 'refresh');
+        redirect('Login', 'refresh');
     }
 }
 

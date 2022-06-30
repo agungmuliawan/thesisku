@@ -11,10 +11,11 @@
 $this->load->view('template_frontend/head');
 ?>
 <?php
-	$this->load->view('template_frontend/topbar_member');
-	?>
+$this->load->view('template_frontend/topbar_member');
+?>
+
 <body>
-	
+
 	<!-- akhir menu aplikasi -->
 	<section class="ftco-section">
 		<div class="container">
@@ -43,7 +44,7 @@ $this->load->view('template_frontend/head');
 
 						<div class="col-sm col-md-6 col-lg ftco-animate">
 							<div class="destination">
-								<a href="<?php echo site_url('Home/detail_hotel/' . $row['id_hotel']) ?>" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url(../assets/images/card/hotel.png);">
+								<a href="<?php echo site_url('Home/detail_hotel/' . $row['id_hotel'] . '?param=' . htmlentities(json_encode($param))) ?>" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url(../assets/images/card/hotel.png);">
 									<div class="icon d-flex justify-content-center align-items-center">
 										<span class="icon-search2"></span>
 									</div>
@@ -127,13 +128,13 @@ $this->load->view('template_frontend/head');
 						<div class="col-12">
 							<h5>Pilihan Kebutuhan Hotel</h5>
 						</div>
-						<div class="col-6">
+						<!-- <div class="col-6">
 							<div class="form-group">
 								<label>Daerah Anda</label>
 								<input type="text" class="form-control" readonly value="<?php echo $daerah_anda->nm_lokasi; ?>">
 							</div>
-						</div>
-						<div class="col-6">
+						</div> -->
+						<div class="col-12">
 							<div class="form-group">
 								<label>Tujuan Anda</label>
 								<input type="text" class="form-control" readonly value="<?php echo $tujuan_anda->nm_lokasi; ?>">
@@ -147,13 +148,13 @@ $this->load->view('template_frontend/head');
 								<div class="col-4">
 								';
 
-								// if ($key == 'kp') {
-								 	echo '<div class="badge badge-primary"> Kebutuhan Prioritas </div>';
-								// } else if ($key == 'ku') {
-								 	echo '<div class="badge badge-info"> Kebutuhan Utama </div>';
-								// } else if ($key == 'kt') {
-								 	echo '<div class="badge badge-warning"> Kebutuhan Tambahan </div>';
-								// }
+								if ($key == 'kp') {
+									echo '<div class="badge badge-primary"> Kebutuhan Prioritas </div>';
+								} else if ($key == 'ku') {
+									echo '<div class="badge badge-info"> Kebutuhan Utama </div>';
+								} else if ($key == 'kt') {
+									echo '<div class="badge badge-warning"> Kebutuhan Tambahan </div>';
+								}
 								foreach ($value as $key_value => $value_result) {
 									switch ($key_value) {
 										case 'review':
@@ -168,6 +169,9 @@ $this->load->view('template_frontend/head');
 										case 'tipe_kamar';
 											echo '<li> Tipe Kamar : ' . $tipe_kamar->tipe_kamar . '</li>';
 											break;
+										default:
+											echo '<li> ' . ucwords(implode(' ', explode('_', $value_result))) . '  </li>';
+											break;
 									}
 								}
 								echo "</div>";
@@ -179,13 +183,14 @@ $this->load->view('template_frontend/head');
 							<h4>Hitung Lokasi</h4>
 							<div class="row">
 								<?php
+								$i = 1;
 								foreach ($result['perhitungan_lokasi'] as $key => $value) {
 									echo '
 											<div class="col-2">
 												&nbsp;
 											</div>
 											<div class="col-8">
-												<h5 class="bg-info text-center">' . ($key++) . '</h5>
+												<h5 class="bg-info text-center">' . ($i++) . '</h5>
 												<table class="table">
 													<thead>
 														<th>Jenis</th>
@@ -233,7 +238,7 @@ $this->load->view('template_frontend/head');
 								?>
 							</div>
 							<hr>
-							<h4>Hitung Metoed</h4>
+							<h4>Hitung Metode</h4>
 							<h4>
 								<div class="row">
 									<?php
@@ -280,7 +285,8 @@ $this->load->view('template_frontend/head');
 													hasil = sum total / sum bobot;<br>
 													dari hasil diambil 3 koma
 													$hasil = ' . $value['perhitungan']['sum_total'] . ' / ' . $value['perhitungan']['sum_bobot'] . ' <br>
-													$hasil = ' . round($value['perhitungan']['skor'], 3) . '
+													$hasil = ' . round($value['perhitungan']['skor'], 3) . '<br>
+													$data_training_id = ' . $value['id_data_training'] . '
 
 												</li>
 										</div>

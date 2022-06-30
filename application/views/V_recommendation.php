@@ -107,7 +107,7 @@ $this->load->view('template_frontend/head');
 			<form action="<?php echo site_url('transaksi/C_transaksi'); ?>" method="post">
 				<div class="block-17 my-4">
 					<div class="fields d-block d-flex">
-						<div class="select-wrap one-third">
+						<!-- <div class="select-wrap one-third">
 							<div class="icon"><span class="ion-ios-arrow-down"></span></div>
 							<label>Daerah Anda</label>
 							<select name="daerah_anda" id="daerah_anda" class="form-control" placeholder="Keyword search">
@@ -118,7 +118,7 @@ $this->load->view('template_frontend/head');
 									<option value="<?php echo $row->id_lokasi ?>"><?php echo $row->nm_lokasi ?></option>
 								<?php } ?>
 							</select>
-						</div>
+						</div> -->
 						<div class="select-wrap one-third">
 							<div class="icon"><span class="ion-ios-arrow-down"></span></div>
 							<label>Tujuan Lokasi</label>
