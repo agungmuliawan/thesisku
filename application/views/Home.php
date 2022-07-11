@@ -99,7 +99,7 @@ $this->load->view('template_frontend/topbar');
 	<!-- untuk rekomendasi kemiripan hotel -->
 	<!-- akhir kemiripan hotel -->
 	<!-- akhir menu aplikasi -->
-	<section class="ftco-section">
+	<!-- <section class="ftco-section">
 		<div class="container">
 			<div class="row justify-content-start mb-5 pb-3">
 				<div class="col-md-7 heading-section ftco-animate">
@@ -107,8 +107,7 @@ $this->load->view('template_frontend/topbar');
 					<h2 class="mb-4"><strong>TOP 8</strong> Hotel Populer 2021</h2>
 				</div>
 			</div>
-		</div>
-		<!-- <div class="container-fluid"> -->
+
 		<div class="container-fluid col-md-10">
 			<div class="row">
 				<?php
@@ -185,7 +184,7 @@ $this->load->view('template_frontend/topbar');
 				?>
 			</div>
 		</div>
-	</section>
+	</section> -->
 	
 	<?php
 	$this->load->view('template_frontend/footer');

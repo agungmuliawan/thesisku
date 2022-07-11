@@ -39,16 +39,23 @@ $this->load->view('template_frontend/topbar_member');
 				<div class="row">
 					<?php
 					foreach ($result['result'] as $row) {
-
+						// var_dump($result['result']);
+						// print_r($result['result']);
+						// die(); 
+						
 					?>
 
 						<div class="col-sm col-md-6 col-lg ftco-animate">
 							<div class="destination">
-								<a href="<?php echo site_url('Home/detail_hotel/' . $row['id_hotel'] . '?param=' . htmlentities(json_encode($param))) ?>" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url(../assets/images/card/hotel.png);">
+								<a href="<?php echo site_url('Home/detail_hotel/' . $row['id_hotel'] . '?param=' . htmlentities(json_encode($param))) ?>" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url(../assets/images/card/<?php echo $row['foto'] ?>);">
 									<div class="icon d-flex justify-content-center align-items-center">
 										<span class="icon-search2"></span>
 									</div>
 								</a>
+								<?php
+								//echo $row['image'];
+								var_dump($row);
+								?>
 								<div class="text p-3">
 									<div class="d-flex">
 										<div class="one">

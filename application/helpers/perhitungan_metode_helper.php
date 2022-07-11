@@ -247,4 +247,6 @@ function hitungJarakLokasi($lokasi_asal, $lokasi_pembanding)
     // ddd($result);
     // return $nilai_d;
     // var_dump($nilai_d);
+    
+    // duh lah capek ngoding pengen segera sidang adiks adiks
 }

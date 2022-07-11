@@ -51,7 +51,7 @@ class C_transaksi extends CI_Controller
         //  $panggil = $this->session->userdata();
         //  var_dump($panggil);
         // die();
-        // $this->load->view('admin/V_blank');
+        redirect('Home/recommendation', 'refresh');
     }
     /*	public function test()
         {

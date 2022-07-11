@@ -36,10 +36,10 @@ $panggil = $this->session->userdata();
 					?>
 
 					<li class="active">
-						<a href="<?php echo site_url('admin/C_home') ?>" aria-expanded="true"><i
+						<a href="<?php echo site_url('admin_area/C_home') ?>" aria-expanded="true"><i
 								class="ti-home active"></i><span>Home</span></a>
 					</li>
-					<li>
+					<!-- <li>
 						<a href="javascript:void(0)" aria-expanded="true"><i class="fa fa-align-left"></i> <span>Data
 								Master</span></a>
 						<ul class="collapse">
@@ -53,8 +53,8 @@ $panggil = $this->session->userdata();
 					<li><a href="<?php echo site_url('admin/C_modul') ?>"><i class="ti-folder"></i>
 							<span>Pemesanan</span></a></li>
 					<li><a href="<?php echo site_url('admin/C_user') ?>"><i class="ti-info"><span>Info</span></i></a>
-					</li>
-					<li><a href="<?php echo site_url('admin/C_user') ?>"><i class="ti-user"><span>Rubah
+					</li> -->
+					<li><a href="#"><i class="ti-user"><span>Rubah
 									Password</span></i></a>
 					</li>
 

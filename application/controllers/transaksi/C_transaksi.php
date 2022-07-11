@@ -80,7 +80,7 @@ class C_transaksi extends CI_Controller
 				'skor_review' =>  $hotel->review,
 				'tipe_kamar' =>  $hotel->tipe_kamar,
 				'persentase' => $persentase,
-				'foto' => '...',
+				'foto' => $hotel->image,
 				'kemiripan' => $value['skor'],
 				'perhitungan' => $value,
 				'id_data_training' => $value['id_data_training']
