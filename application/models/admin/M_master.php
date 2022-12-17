@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 /**
  *
@@ -16,84 +16,85 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  *
  */
 
-class M_master extends CI_Model {
-  // ------------------------------------------------------------------------
+class M_master extends CI_Model
+{
+    // ------------------------------------------------------------------------
 
 
-  // ------------------------------------------------------------------------
-  public function data_lokasi()
-  {
-      $query = $this->db->query('select * from tb_lokasi');
-      $num = $query->num_rows();
-      if ($num>0) {
-          return $query->result();
-      } else {
-          return 0;
-      }
-  }
-  public function data_harga()
-  {
-      $query = $this->db->query('select * from tb_harga');
-      $num = $query->num_rows();
-      if ($num>0) {
-          return $query->result();
-      } else {
-          return 0;
-      }
-  }
-  public function data_kelas()
-  {
-      $query = $this->db->query('select * from tb_kelas');
-      $num = $query->num_rows();
-      if ($num>0) {
-          return $query->result();
-      } else {
-          return 0;
-      }
-  }
-  public function data_review()
-  {
-      $query = $this->db->query('select * from tb_review');
-      $num = $query->num_rows();
-      if ($num>0) {
-          return $query->result();
-      } else {
-          return 0;
-      }
-  }
-  public function data_tipe_kamar()
-  {
-      $query = $this->db->query('select * from tb_tipe_kamar');
-      $num = $query->num_rows();
-      if ($num>0) {
-          return $query->result();
-      } else {
-          return 0;
-      }
-  }
-  public function data_hotel()
-  {
-      $query = $this->db->query('select * from tb_hotel');
-      $num = $query->num_rows();
-      if ($num>0) {
-          return $query->result();
-      } else {
-          return 0;
-      }
-  }
-  public function data_training()
-  {
-      $query = $this->db->query('select * from tb_training');
-      $num = $query->num_rows();
-      if ($num>0) {
-          return $query->result();
-      } else {
-          return 0;
-      }
-  }
- 
+    // ------------------------------------------------------------------------
+    public function data_lokasi()
+    {
+        $query = $this->db->query('select * from tbl_lokasi');
+        $num = $query->num_rows();
+        if ($num > 0) {
+            return $query->result();
+        } else {
+            return 0;
+        }
+    }
+    public function data_harga()
+    {
+        $query = $this->db->query('select * from tb_harga');
+        $num = $query->num_rows();
+        if ($num > 0) {
+            return $query->result();
+        } else {
+            return 0;
+        }
+    }
+    public function data_kelas()
+    {
+        $query = $this->db->query('select * from tb_kelas');
+        $num = $query->num_rows();
+        if ($num > 0) {
+            return $query->result();
+        } else {
+            return 0;
+        }
+    }
+    public function data_review()
+    {
+        $query = $this->db->query('select * from tb_review');
+        $num = $query->num_rows();
+        if ($num > 0) {
+            return $query->result();
+        } else {
+            return 0;
+        }
+    }
+    public function data_tipe_kamar()
+    {
+        $query = $this->db->query('select * from tb_tipe_kamar');
+        $num = $query->num_rows();
+        if ($num > 0) {
+            return $query->result();
+        } else {
+            return 0;
+        }
+    }
+    public function data_hotel()
+    {
+        $query = $this->db->query('select * from tb_hotel');
+        $num = $query->num_rows();
+        if ($num > 0) {
+            return $query->result();
+        } else {
+            return 0;
+        }
+    }
+    public function data_training()
+    {
+        $query = $this->db->query('select * from tb_training');
+        $num = $query->num_rows();
+        if ($num > 0) {
+            return $query->result();
+        } else {
+            return 0;
+        }
+    }
 
-  // ------------------------------------------------------------------------
+
+    // ------------------------------------------------------------------------
 
 }
 

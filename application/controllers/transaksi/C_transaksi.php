@@ -54,33 +54,29 @@ class C_transaksi extends CI_Controller
 			// echo $key.'<br>';
 			$id_hotel = $value['id_hotel'];
 			$hotel = $this->db->query("select 
-						tb_hotel.*,
+						tbl_hotel.*,
 						tb_lokasi.nm_lokasi,
-						tb_review.review,
-						tb_harga.harga,
 						tb_tipe_kamar.tipe_kamar
-					from tb_hotel
-					inner join tb_tipe_kamar on tb_tipe_kamar.id_tipe_kamar = tb_hotel.id_tipe_kamar
-					inner join tb_lokasi on tb_lokasi.id_lokasi = tb_hotel.id_lokasi
-					inner join tb_harga on tb_harga.id_harga = tb_hotel.id_harga
-					inner join tb_review on tb_review.id_review = tb_hotel.id_review
-					where tb_hotel.id_hotel = $id_hotel
+					from tbl_hotel
+					inner join tb_tipe_kamar on tb_tipe_kamar.id_tipe_kamar = tbl_hotel.id_tipe_kamar
+					inner join tb_lokasi on tb_lokasi.id_lokasi = tbl_hotel.lokasi
+					where tbl_hotel.id_hotel = $id_hotel
 			")->result()[0] ?? null;
 			if (empty($hotel)) {
 				if ($key == 0) continue;
-				ddd($key, $value, 'hotel tidak ditemukan');
+				// ddd($key, $value, 'hotel tidak ditemukan');
 			}
-			// ddd($key, $value);
+			// ddd($key, $value, $hotel, $id_hotel);
 			$persentase = round((($value['skor'] / 1) * 100), 2);
 			$result[] = [
 				'id_hotel' => $value['id_hotel'],
-				'nama_hotel' => $hotel->nama_hotel,
-				'harga' => $hotel->harga,
-				'lokasi' => $hotel->nm_lokasi,
-				'skor_review' =>  $hotel->review,
-				'tipe_kamar' =>  $hotel->tipe_kamar,
+				'nama_hotel' => $hotel->nama_hotel ?? null,
+				'harga' => $hotel->harga ?? null,
+				'lokasi' => $hotel->nm_lokasi ?? null,
+				'skor_review' =>  $hotel->review ?? null,
+				'tipe_kamar' =>  $hotel->tipe_kamar ?? null,
 				'persentase' => $persentase,
-				'foto' => $hotel->image,
+				'foto' => $hotel->foto ?? null,
 				'kemiripan' => $value['skor'],
 				'perhitungan' => $value,
 				'id_data_training' => $value['id_data_training']

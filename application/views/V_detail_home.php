@@ -97,7 +97,7 @@ $this->load->view('template_frontend/head');
 							</div>
 						</div>
 						<div class="col-md-12 hotel-single mt-4 mb-5 ftco-animate">
-							<h2><?php echo $hotel->nama_hotel ?></h2>
+							<h2><?php echo $hotel->nama_hotel; ?></h2>
 							<p class="rate mb-5">
 								<span class="loc"><a href="#"><i class="icon-map"></i> <?php echo $lokasi->nm_lokasi; ?></a></span>
 							</p>
@@ -147,8 +147,6 @@ $this->load->view('template_frontend/head');
 								<?php
 								$result = $this->db->query("SELECT * FROM detail_hotel where id_hotel = '" . $hotel->id_hotel . "' ")->result();
 								foreach ($result as $row) {
-
-
 								?>
 									<div class="col-md-4">
 										<div class="destination">

@@ -42,7 +42,7 @@ $this->load->view('template_frontend/topbar_member');
 						// var_dump($result['result']);
 						// print_r($result['result']);
 						// die(); 
-						
+
 					?>
 
 						<div class="col-sm col-md-6 col-lg ftco-animate">
@@ -54,7 +54,7 @@ $this->load->view('template_frontend/topbar_member');
 								</a>
 								<?php
 								//echo $row['image'];
-								var_dump($row);
+								// var_dump($row);
 								?>
 								<div class="text p-3">
 									<div class="d-flex">
