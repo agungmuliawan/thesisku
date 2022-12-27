@@ -14,6 +14,35 @@ $this->load->view('template_frontend/head');
 $this->load->view('template_frontend/topbar_member');
 ?>
 
+<style>
+	/* .chartWrapper {
+		position: relative;
+	}
+
+	.chartWrapper>canvas {
+		position: absolute;
+		left: 0;
+		top: 0;
+		pointer-events: none;
+	}
+
+	.chartAreaWrapper {
+		width: 600px;
+		overflow-x: scroll;
+	} */
+
+	div.chartWrapper {
+		position: relative;
+		overflow: auto;
+		width: 100%;
+	}
+
+	div.chartContainer {
+		position: relative;
+		height: 500px;
+	}
+</style>
+
 <body>
 
 	<!-- akhir menu aplikasi -->
@@ -35,10 +64,20 @@ $this->load->view('template_frontend/topbar_member');
 			</div>
 		</div>
 		<div class="container-fluid">
-			<div class="container-fluid col-md-10">
+			<div class="chartWrapper">
+				<div class="chartContainer">
+					<canvas id="myChart" height="500;"></canvas>
+				</div>
+			</div>
+			<div>
+				<canvas id="myChartHarvest" height="700;"></canvas>
+			</div>
+			<!-- <canvas id="myChartAxis" width="0"></canvas> -->
+			<div class="container-fluid col-md-10 pt-5">
 				<div class="row">
 					<?php
 					foreach ($result['result'] as $row) {
+						// ddd($row);
 						// var_dump($result['result']);
 						// print_r($result['result']);
 						// die(); 
@@ -63,7 +102,14 @@ $this->load->view('template_frontend/topbar_member');
 											<p class="rate">
 												<?php
 												$persentase = $row['persentase'];
-												if ($persentase > 80 and $persentase < 100) {
+												$algoritma = ($row['perhitungan']['algoritmaCollaborativeFiltering']['result'] * 100);
+												$hybrid = ($row['perhitungan']['total_result_hybrid'] * 100);
+
+												$clas_persentase = badgeClass($persentase);
+												$clas_algoritma = badgeClass($algoritma);
+												$clas_hybrid = badgeClass($hybrid);
+
+												if ($persentase >= 80 and $persentase <= 100) { #success
 												?>
 													<i class="icon-star"></i>
 													<i class="icon-star"></i>
@@ -71,20 +117,20 @@ $this->load->view('template_frontend/topbar_member');
 													<i class="icon-star"></i>
 													<i class="icon-star"></i>
 												<?php
-												} elseif ($persentase > 60 and $persentase < 80) {
+												} elseif ($persentase >= 60 and $persentase < 80) { #primary
 												?>
 													<i class="icon-star"></i>
 													<i class="icon-star"></i>
 													<i class="icon-star"></i>
 													<i class="icon-star"></i>
 												<?php
-												} elseif ($persentase > 40 and $persentase < 60) {
+												} elseif ($persentase >= 40 and $persentase < 60) { #info
 												?>
 													<i class="icon-star"></i>
 													<i class="icon-star"></i>
 													<i class="icon-star"></i>
 												<?php
-												} elseif ($persentase > 20 and $persentase < 40) {
+												} elseif ($persentase >= 20 and $persentase < 40) { #warning
 												?>
 													<i class="icon-star"></i>
 													<i class="icon-star"></i>
@@ -103,9 +149,14 @@ $this->load->view('template_frontend/topbar_member');
 												<?php echo $row['harga'] ?></span>
 										</div>
 									</div>
-									<p>Kemiripan : <?php echo round($persentase, 3) ?>%</p>
+									<p>Kemiripan dengan metode KNN : <span class="btn-clas-persentase <?php echo $clas_persentase; ?>"><?php echo round($persentase, 3) ?>% </span> </p>
+									<p>Kemiripan dengan metode algoritmaCollaborativeFiltering : <span class="btn-clas-algoritma <?php echo $clas_algoritma; ?>"><?php echo round($algoritma, 3) ?>% </span> </p>
+									<p>Kemiripan dengan metode total_result_hybrid : <span class="btn-c-as_hybrid<?php echo $clas_hybrid; ?>"><?php echo round($hybrid, 3) ?>% </span> </p>
+									<button class="btn-detail-perhitungan btn btn-info" data-id="<?php echo $row['id_data_training']; ?>" data-perhitungan='<?php echo json_encode($row['perhitungan']); ?>'>
+										Lihat Perhitungan Detail
+									</button>
 									<hr>
-									<p class="bottom-area d-flex">
+									<p class=" bottom-area d-flex">
 										<span><i class="icon-map-o"></i> <?php echo $row['lokasi'] ?></span>
 										<span class="ml-auto"><a href="<?php echo site_url('Home/detail_hotel/' . $row['id_hotel']) ?>">Book Now</a></span>
 									</p>
@@ -312,6 +363,25 @@ $this->load->view('template_frontend/topbar_member');
 		</div>
 	</div>
 
+
+	<div class="modal fade" id="perhitungan" tabindex="-1" role="dialog" aria-labelledby="perhitunganLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="perhitunganLabel"></h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body content-body-perhitungan-detail">
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	<?php
 	$this->load->view('template_frontend/footer');
 	?>
@@ -320,6 +390,127 @@ $this->load->view('template_frontend/topbar_member');
 	?>
 	<!-- loader -->
 
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script>
+		$(document).on('click', '.btn-detail-perhitungan', function() {
+			let data = $(this).data('perhitungan');
+			let id = $(this).data('id')
+			$("#perhitunganLabel").html(`Hasil Perhitungan - ${id}`)
+			$('#perhitungan').modal('show');
+			let html = ``;
+			$('.content-body-perhitungan-detail').html(html)
+			$.each(data, function(key, value) {
+				// console.log(key, value);
+				if (typeof value == 'object') {
+					// html += `${key} : <br>` + (JSON && JSON.stringify ? JSON.stringify(value) : String(value)) + '<br />';
+					html += `${key} : <br>`;
+					$.each(value, function(keyValue, valValue) {
+						html += `-- ${keyValue} <br>` + (JSON && JSON.stringify ? JSON.stringify(valValue) : String(valValue)) + '<br>';
+					});
+				} else {
+					html += `${key} : ` + value + '<br />';
+				}
+			});
+
+			$(".content-body-perhitungan-detail").html(html)
+			// console.log(data)
+		})
+		// const config = {
+		// 	type: 'line',
+		// 	data: data,
+		// };
+		// const labels = Utils.months({
+		// 	count: 7
+		// });
+		// const data = {
+		// 	labels: labels,
+		// 	datasets: [{
+		// 		label: 'My First Dataset',
+		// 		data: [65, 59, 80, 81, 56, 55, 40],
+		// 		fill: false,
+		// 		borderColor: 'rgb(75, 192, 192)',
+		// 		tension: 0.1
+		// 	}]
+		// };
+
+		const ctx = document.getElementById('myChart');
+		const ctxHarvest = document.getElementById('myChartHarvest');
+		let data = {
+			labels: <?php echo json_encode($arr_nama_hotel); ?>,
+			datasets: [{
+					label: 'KNN',
+					data: <?php echo json_encode($arr_knn); ?>,
+					borderWidth: 1
+				},
+				{
+					label: 'algoritmaCollaborativeFiltering',
+					data: <?php echo json_encode($arr_algoritma); ?>,
+					borderWidth: 1
+				},
+				{
+					label: 'hybrid',
+					data: <?php echo json_encode($arr_hybrid); ?>,
+					borderWidth: 1
+				}
+			]
+		}
+		// console.log(data)
+		// new Chart(ctx, {
+		// 	type: 'line',
+		// 	data: data,
+		// 	options: {
+		// 		scales: {
+		// 			y: {
+		// 				beginAtZero: true
+		// 			}
+		// 		},
+		// 		responsive: true,
+		// 		maintainAspectRatio: false
+		// 	},
+		// });
+
+		var xAxisLabelMinWidth = 15; // Replace this with whatever value you like
+		var myChart = new Chart(document.getElementById('myChart').getContext('2d'), {
+			type: 'line',
+			data: data,
+			options: {
+				responsive: true,
+				maintainAspectRatio: false
+			}
+		});
+		fitChart()
+
+		function fitChart() {
+			var chartCanvas = document.getElementById('myChart');
+			var maxWidth = chartCanvas.parentElement.parentElement.clientWidth;
+			var width = Math.max(myChart.data.labels.length * xAxisLabelMinWidth, maxWidth);
+
+			chartCanvas.parentElement.style.width = width + 'px';
+		}
+
+		let dataHarvest = {
+			labels: <?php echo json_encode($arr_nama_lokasi); ?>,
+			datasets: [{
+				label: 'Harvest',
+				data: <?php echo json_encode($arr_harvest); ?>,
+				borderWidth: 1
+			}]
+		}
+		console.log(dataHarvest);
+		new Chart(ctxHarvest, {
+			type: 'line',
+			data: dataHarvest,
+			options: {
+				scales: {
+					y: {
+						beginAtZero: true
+					}
+				},
+				responsive: true,
+				maintainAspectRatio: false
+			},
+		});
+	</script>
 
 </body>
 

@@ -5,7 +5,7 @@ function hitungPerbandingan(array $post)
 {
 	$ci = &get_instance();
 	$ci->load->database();
-	$data_training = $ci->db->query('select * from tb_training')->result();
+	$data_training = $ci->db->query('select * from tb_training group by result')->result();
 	// $result = $this->db->query("SELECT * FROM tb_kelas")->result();
 	// ddd([$post, $data_training]);
 
@@ -47,30 +47,41 @@ function hitungPerbandingan(array $post)
 				// if ($value->id_transaksi == 2) {
 				//     dd($key_val, $bobot, $kemiripan);
 				// }
+
 				$total      = $bobot * $kemiripan['result'];
 				$sum_bobot  += $bobot;
 				$sum_total  += $total;
+				$data_real = $value_field_db > 0 ? 1 : 0;
 				$detail[$key_field] = [
 					'bobot'     => $bobot,
 					'kemiripan' => $kemiripan,
-					'total'     =>  $total,
+					'total'     => $total,
+					'data_real' => $data_real, #1 untuk ada, 0 untuk tidak ada
 				];
 				if ($key_field == 'lokasi') {
 					if (count($kemiripan['detail'] ?? []) > 0) {
 						if (count($perhitungan_lokasi) == 0) {
 							$perhitungan_lokasi = $kemiripan['detail'];
 						}
-						unset($detail[$key_field]['kemiripan']['detail']);
+						// ddd($detail);
+						// unset($detail[$key_field]['kemiripan']['detail']);
 					}
 				}
 				// ddd($detail);
 			}
 		}
+		$algoritmaCollaborativeFiltering = algoritmaCollaborativeFiltering(
+			$data_search = $arr_bobot,
+			$data_training = $detail
+		);
+
+		$hasil_algoritmaCollaborativeFiltering = $algoritmaCollaborativeFiltering['result'];
 		$hasil = 0;
 		// dd($sum_total, $sum_bobot);
 		if ($sum_bobot > 0) {
 			$hasil = $sum_total / $sum_bobot;
 		}
+		$total_result_hybrid = ($hasil + $hasil_algoritmaCollaborativeFiltering) / 2;
 		// if ($key == 3)
 		//     ddd($arr_bobot, $value, $hasil, $detail);
 		$result[$key] = [
@@ -80,9 +91,11 @@ function hitungPerbandingan(array $post)
 			'sum_bobot' => $sum_bobot,
 			'id_hotel' => $value->result,
 			'id_data_training' => $value->id_transaksi,
+			'total_result_hybrid' => $total_result_hybrid,
+			'algoritmaCollaborativeFiltering' => $algoritmaCollaborativeFiltering
 		];
 		// if ($value->id_transaksi == 1) {
-		//     dd($result[0]);
+		// ddd($result);
 		//     die();
 		// }
 	}
@@ -204,7 +217,7 @@ function hitungKemiripan($pembanding = 1, $data_training = 2, $field)
 				// ddd($iterasi, $kemiripan,  $arr_result);
 				return [
 					'result' => $kemiripan,
-					'hitungan' => "1 - ($calculate_kemiripan * abs($iterasi)",
+					'hitungan' => "1 - ($calculate_kemiripan * abs($iterasi))",
 					'detail' => $arr_result,
 				];
 			} else {
@@ -249,5 +262,84 @@ function hitungJarakLokasi($lokasi_asal, $lokasi_pembanding)
 	// return $nilai_d;
 	// var_dump($nilai_d);
 
+	$delta_lat  = (3.14 / 180) * ($lokasi_pembanding->lat - $lokasi_asal->lat); #(3,14/180) * (lat pembanding - lat asal)
+	$delta_long = (3.14 / 180) * ($lokasi_pembanding->long - $lokasi_asal->long); #(3,14/180) * (long pembanding - long asal)
+	$nilai_a    = sin($delta_lat / 2); # sin(delta_lat/2)^2
+	$nilai_a = pow($nilai_a, 2);
+	$nilai_c = cos($lokasi_asal->lat) * cos($lokasi_pembanding->lat) * pow(sin($delta_long / 2), 2); #(COS(lat awal) * ( cos(lat pembanding) ) * sin (delta long/2)) ^ 2
+	// $nilai_c = pow($nilai_c, 2);
+	$nilai_d = 6371 * 2 * asin(sqrt($nilai_a + $nilai_c)); #=6371*2*ASIN(SQRT(M10+N10))
+	// if ($lokasi_pembanding->id_lokasi == 10)
+	//     ddd($delta_lat, $delta_long, $nilai_a, $nilai_c, $nilai_d);
+	$result = [
+		'lokasi_asal' => $lokasi_asal,
+		'lokasi_pembanding' => $lokasi_pembanding,
+		'result' => $nilai_d,
+		'delta_lat' => "(3.14 / 180) * ($lokasi_pembanding->lat - $lokasi_asal->lat)",
+		'delta_long' => "(3.14 / 180) * ($lokasi_pembanding->long - $lokasi_asal->long)",
+		'nilai_a' => "sin($delta_lat / 2)",
+		'nilai_b' => "pow($nilai_a, 2)",
+		'nilai_c' => "cos($lokasi_asal->lat) * cos($lokasi_pembanding->lat) * pow(sin($delta_long / 2), 2)",
+		'nilai_d' => "6371 * 2 * asin(sqrt($nilai_a + $nilai_c))",
+	];
+	return $result;
+	// ddd($result);
+	// return $nilai_d;
+	// var_dump($nilai_d);
+
 	// duh lah capek ngoding pengen segera sidang adiks adiks
+}
+
+/**
+ * perbandingan mengunakan 
+ * ALGORITMA COLLABORATIVE FILTERING
+ */
+
+function algoritmaCollaborativeFiltering(
+	array $data_search,
+	array $data_training
+) {
+	// ddd($data_search, $data_training);
+
+	/**
+	 * mencari pembobotan dengan rumusnya nanti yang akan digunakan
+	 * S0(U1,U2)=
+	 * cos [ (1*1 + 1*1+ 1*0) / sqrt(pow(1) + pow (1) + pow(1)) * sql(pow(1) + pow(1) + pow(0)) ]
+	 */
+	// $arr_Ri = [];
+	// $arr_Rj = [];
+	$arr_detail = [];
+	$R_ij = 0;
+	$R_i = 0; #data_training
+	$R_j = 0; #data_search
+	foreach ($data_training as $key => $value) {
+		#jika data training data real 1 maka pake yang value kemiripan
+		$normalisasi_value = 0;
+		if ($value['data_real'] == 1) {
+			$normalisasi_value = $value['kemiripan']['result'];
+		}
+
+		$value_data_search = $data_search[$key]['value'] ?? 0;
+		$value_data_search = $value_data_search >= 1 ? 1 : $value_data_search;
+
+		$hitungan_R_ij = $normalisasi_value * $value_data_search;
+		$hitungan_R_i = pow($normalisasi_value, 2);
+		$hitungan_R_j = pow($value_data_search, 2);
+		$R_ij += $hitungan_R_ij;
+		$R_i += $hitungan_R_i;
+		$R_j += $hitungan_R_j;
+		// ddd($key, $value);
+		$arr_detail[$key] = [
+			'R_ij_string' => "$normalisasi_value * $value_data_search",
+			'R_ij' => $hitungan_R_ij,
+			'R_i_string' => "pow($normalisasi_value, 2)",
+			'R_i' => $hitungan_R_i,
+			'R_j_string' => "pow($value_data_search, 2)",
+			'R_j' => $hitungan_R_j,
+		];
+	}
+	$result = cos($R_ij / (sqrt($R_i) * sqrt($R_j)));
+	// ddd($result, $R_ij, $R_i, sqrt($R_i), $R_j, sqrt($R_j), $arr_detail,);
+	$arr_detail['result'] = $result;
+	return $arr_detail;
 }

@@ -23,11 +23,42 @@ class C_transaksi extends CI_Controller
 		$data['tujuan_anda'] = $this->db->query('select * from tb_lokasi where id_lokasi = ' . $post['tujuan_anda'])->result()[0];
 		$data['review'] = !empty($review) ? $this->db->query('select * from tb_review where id_review = ' . $review)->result()[0] : null;
 		// ddd($data);
+		$result = $this->setDataHitungMetode($post);
 		$data['kelas'] = !empty($kelas) ? $this->db->query('select * from tb_kelas where id_kelas = ' . $kelas)->result()[0] : null;
 		$data['harga'] = !empty($harga) ? $this->db->query('select * from tb_harga where id_harga = ' . $harga)->result()[0] : null;
 		$data['tipe_kamar'] = !empty($tipe_kamar) ? $this->db->query('select * from tb_tipe_kamar where id_tipe_kamar = ' . $tipe_kamar)->result()[0] : null;
-		$data['result'] = $this->setDataHitungMetode($post);
-		// ddd($data['result']);
+		$data['result'] = $result;
+
+		$arr_nama_hotel = [];
+		$arr_knn = [];
+		$arr_algoritma = [];
+		$arr_hybrid = [];
+		$arr_harvest = [];
+		$arr_nama_lokasi = [];
+
+		// ddd($result);
+		foreach ($result['perhitungan_lokasi'] as $key => $value) {
+			// ddd($value['lokasi_asal']);
+			$arr_nama_lokasi[] = 'Lokasi Asal : ' . $value['lokasi_asal']->nm_lokasi . ' vs Lokasi Pembanding : ' . $value['lokasi_pembanding']->nm_lokasi;
+			$arr_harvest[] = $value['result'];
+		}
+		// ddd($arr_nama_lokasi, $arr_harvest);
+		foreach ($result['result'] as $key => $value) {
+			$algoritma = round(($value['perhitungan']['algoritmaCollaborativeFiltering']['result'] * 100), 2);
+			$hybrid = round(($value['perhitungan']['total_result_hybrid'] * 100), 0);
+			$arr_nama_hotel[] = (string)$value['nama_hotel'] . '-' . $value['id_data_training'];
+			$arr_knn[] = $value['persentase'];
+			$arr_algoritma[] = $algoritma;
+			$arr_hybrid[] = $hybrid;
+		}
+
+		$data['arr_nama_hotel'] = $arr_nama_hotel;
+		$data['arr_knn'] = $arr_knn;
+		$data['arr_algoritma'] = $arr_algoritma;
+		$data['arr_hybrid'] = $arr_hybrid;
+		$data['arr_nama_lokasi'] = $arr_nama_lokasi;
+		$data['arr_harvest'] = $arr_harvest;
+
 		/**
 		 * id hootel
 		 * nama hotel
